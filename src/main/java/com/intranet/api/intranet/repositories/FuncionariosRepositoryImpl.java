@@ -138,10 +138,7 @@ public List<Ausencias> listAusencias(Integer rut) {
         Ausencias ausencias = new Ausencias();
         ausencias.setIdent(rs.getInt("ident"));
         ausencias.setDescripcion(rs.getString("DESCTIPOAUSENCIA"));
-        ausencias.setRut(rs.getInt("rut"));
-        ausencias.setLinausencia(rs.getInt("LINAUSENCIA"));
-        ausencias.setResol(rs.getString("resol"));
-        ausencias.setFecha_resol(rs.getDate("FECHARESOL"));
+      
         ausencias.setFecha_inicio(rs.getDate("FECHAINICIO"));
         ausencias.setFecha_termino(rs.getDate("FECHATERMINO"));
         ausencias.setDias_feriados(rs.getInt("feriados_mes"));

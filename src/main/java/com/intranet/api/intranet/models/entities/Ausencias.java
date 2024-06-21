@@ -7,22 +7,16 @@ import java.time.LocalDate;
 public class Ausencias {
 
     private Integer ident;
-    private Integer rut;
     private String descripcion;
-    private Integer linausencia;
-    private String resol;
-    private Date fecha_resol;
     private Date fecha_inicio;
     private Date fecha_termino;
     private Long dias_ausencia;
     private Integer dias_feriados;
 
-    public Ausencias(Integer ident, String descripcion, Integer linausencia, Date fecha_resol, Date fecha_inicio,
+    public Ausencias(Integer ident, String descripcion, Date fecha_inicio,
             Date fecha_termino, Integer dias_feriados) {
         this.ident = ident;
         this.descripcion = descripcion;
-        this.linausencia = linausencia;
-        this.fecha_resol = fecha_resol;
         this.fecha_inicio = fecha_inicio;
         this.fecha_termino = fecha_termino;
         this.dias_feriados = dias_feriados;
@@ -47,21 +41,6 @@ public class Ausencias {
         this.descripcion = descripcion;
     }
 
-    public Integer getLinausencia() {
-        return linausencia;
-    }
-
-    public void setLinausencia(Integer linausencia) {
-        this.linausencia = linausencia;
-    }
-
-    public Date getFecha_resol() {
-        return fecha_resol;
-    }
-
-    public void setFecha_resol(Date fecha_resol) {
-        this.fecha_resol = fecha_resol;
-    }
 
     public Date getFecha_inicio() {
         return fecha_inicio;
@@ -79,21 +58,9 @@ public class Ausencias {
         this.fecha_termino = fecha_termino;
     }
 
-    public Integer getRut() {
-        return rut;
-    }
+  
 
-    public void setRut(Integer rut) {
-        this.rut = rut;
-    }
 
-    public String getResol() {
-        return resol;
-    }
-
-    public void setResol(String resol) {
-        this.resol = resol;
-    }
 
     public Long getDias_ausencia() {
         return dias_ausencia;
@@ -103,18 +70,17 @@ public class Ausencias {
         this.dias_ausencia = dias_ausencia;
     }
 
-    
     public long calcularDiasHabiles(Date sqlStartDate, Date sqlEndDate) {
         LocalDate startDate = sqlStartDate.toLocalDate();
         LocalDate endDate = sqlEndDate.toLocalDate();
-    
+
         // Si la fecha de inicio es después de la fecha de fin, no hay días hábiles
         if (startDate.isAfter(endDate)) {
             return 0;
         }
-    
+
         long workingDays = 0;
-    
+
         LocalDate date = startDate;
         while (!date.isAfter(endDate)) {
             // Añadir 1 al conteo de días hábiles si no es sábado ni domingo
@@ -124,10 +90,9 @@ public class Ausencias {
             // Moverse al siguiente día
             date = date.plusDays(1);
         }
-    
+
         return workingDays;
     }
-    
 
     public Integer getDias_feriados() {
         return dias_feriados;
@@ -136,14 +101,5 @@ public class Ausencias {
     public void setDias_feriados(Integer dias_feriados) {
         this.dias_feriados = dias_feriados;
     }
-
-    
-    
-
-    
-
-    
-
-    
 
 }
