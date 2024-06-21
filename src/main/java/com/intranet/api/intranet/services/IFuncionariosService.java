@@ -15,5 +15,6 @@ public interface IFuncionariosService {
      Funcionario findByRut(Integer rut);
 
      List<Ausencias> listAusencias(Integer rut);
+     
 
 }

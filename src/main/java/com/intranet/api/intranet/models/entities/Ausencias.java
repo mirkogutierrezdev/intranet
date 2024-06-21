@@ -15,15 +15,17 @@ public class Ausencias {
     private Date fecha_inicio;
     private Date fecha_termino;
     private Long dias_ausencia;
+    private Integer dias_feriados;
 
     public Ausencias(Integer ident, String descripcion, Integer linausencia, Date fecha_resol, Date fecha_inicio,
-            Date fecha_termino) {
+            Date fecha_termino, Integer dias_feriados) {
         this.ident = ident;
         this.descripcion = descripcion;
         this.linausencia = linausencia;
         this.fecha_resol = fecha_resol;
         this.fecha_inicio = fecha_inicio;
         this.fecha_termino = fecha_termino;
+        this.dias_feriados = dias_feriados;
     }
 
     public Ausencias() {
@@ -101,22 +103,38 @@ public class Ausencias {
         this.dias_ausencia = dias_ausencia;
     }
 
-   
+    
     public long calcularDiasHabiles(Date sqlStartDate, Date sqlEndDate) {
         LocalDate startDate = sqlStartDate.toLocalDate();
         LocalDate endDate = sqlEndDate.toLocalDate();
-
+    
+        // Si la fecha de inicio es después de la fecha de fin, no hay días hábiles
+        if (startDate.isAfter(endDate)) {
+            return 0;
+        }
+    
         long workingDays = 0;
-
+    
         LocalDate date = startDate;
         while (!date.isAfter(endDate)) {
+            // Añadir 1 al conteo de días hábiles si no es sábado ni domingo
             if (date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY) {
                 workingDays++;
             }
+            // Moverse al siguiente día
             date = date.plusDays(1);
         }
-
+    
         return workingDays;
+    }
+    
+
+    public Integer getDias_feriados() {
+        return dias_feriados;
+    }
+
+    public void setDias_feriados(Integer dias_feriados) {
+        this.dias_feriados = dias_feriados;
     }
 
     

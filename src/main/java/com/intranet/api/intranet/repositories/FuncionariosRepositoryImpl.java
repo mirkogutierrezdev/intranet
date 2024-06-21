@@ -111,18 +111,28 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
                 .orElse(null);
     }
 
+   
     @Override
-    public List<Ausencias> listAusencias(Integer rut) {
-        String sql = "SELECT ident, DESCTIPOAUSENCIA, rut, LINAUSENCIA, resol, FECHARESOL, FECHAINICIO, FECHATERMINO " +
-                "FROM PEAUSENCIAS " +
-                "INNER JOIN PETIPOSAUSENCIA ON PEAUSENCIAS.CODTIPOAUSENCIA = PETIPOSAUSENCIA.CODTIPOAUSENCIA " +
-                "WHERE PEAUSENCIAS.rut = :rut ";
+public List<Ausencias> listAusencias(Integer rut) {
+    String sql = "SELECT " +
+                 "    ident, DESCTIPOAUSENCIA, rut, LINAUSENCIA, resol, FECHARESOL, FECHAINICIO, FECHATERMINO, " +
+                 "    PEAUSENCIAS.CODTIPOAUSENCIA, " +
+                 "    (SELECT COUNT(*) " +
+                 "     FROM FERIADOS " +
+                 "     WHERE YEAR(FERIADO) = YEAR(PEAUSENCIAS.FECHAINICIO) " +
+                 "       AND MONTH(FERIADO) BETWEEN MONTH(PEAUSENCIAS.FECHAINICIO) AND MONTH(PEAUSENCIAS.FECHATERMINO) " +
+                 "       AND DAY(FERIADO) BETWEEN DAY(PEAUSENCIAS.FECHAINICIO) AND DAY(PEAUSENCIAS.FECHATERMINO) " +
+                 "    ) as feriados_mes " +
+                 "FROM PEAUSENCIAS " +
+                 "INNER JOIN PETIPOSAUSENCIA ON PEAUSENCIAS.CODTIPOAUSENCIA = PETIPOSAUSENCIA.CODTIPOAUSENCIA " +
+                 "WHERE PEAUSENCIAS.rut = :rut";
 
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("rut", rut);
+    MapSqlParameterSource params = new MapSqlParameterSource();
+    params.addValue("rut", rut);
 
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToAusencias(rs));
-    }
+    return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToAusencias(rs));
+}
+
 
     private Ausencias mapRowToAusencias(ResultSet rs) throws SQLException {
         Ausencias ausencias = new Ausencias();
@@ -134,8 +144,12 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         ausencias.setFecha_resol(rs.getDate("FECHARESOL"));
         ausencias.setFecha_inicio(rs.getDate("FECHAINICIO"));
         ausencias.setFecha_termino(rs.getDate("FECHATERMINO"));
+        ausencias.setDias_feriados(rs.getInt("feriados_mes"));
 
-        ausencias.setDias_ausencia(ausencias.calcularDiasHabiles(ausencias.getFecha_resol(),ausencias.getFecha_termino()));
+        Integer dias_feriados = ausencias.getDias_feriados();
+
+        ausencias.setDias_ausencia(
+                ausencias.calcularDiasHabiles(ausencias.getFecha_inicio(), ausencias.getFecha_termino())-dias_feriados);
         return ausencias;
     }
 

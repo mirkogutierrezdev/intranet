@@ -38,4 +38,6 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
         return repository.listAusencias(rut);
     }
 
+ 
+
 }
