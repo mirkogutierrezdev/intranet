@@ -4,7 +4,7 @@ package com.intranet.api.intranet.models.entities;
 public class Funcionario extends Persona {
 
 
-
+    private String area;
     private Departamentos departamento; 
     private Contratos contrato;
 
@@ -12,6 +12,8 @@ public class Funcionario extends Persona {
     public Funcionario(){
         super();
     }
+
+    
 
     public Departamentos getDepartamento() {
         return departamento;
@@ -27,6 +29,18 @@ public class Funcionario extends Persona {
 
     public void setContrato(Contratos contrato) {
         this.contrato = contrato;
+    }
+
+
+
+    public String getArea() {
+        return area;
+    }
+
+
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     
