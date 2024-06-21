@@ -134,6 +134,8 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         ausencias.setFecha_resol(rs.getDate("FECHARESOL"));
         ausencias.setFecha_inicio(rs.getDate("FECHAINICIO"));
         ausencias.setFecha_termino(rs.getDate("FECHATERMINO"));
+
+        ausencias.setDias_ausencia(ausencias.calcularDiasHabiles(ausencias.getFecha_resol(),ausencias.getFecha_termino()));
         return ausencias;
     }
 

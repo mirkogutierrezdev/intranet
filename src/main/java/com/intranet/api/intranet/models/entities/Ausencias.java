@@ -1,6 +1,8 @@
 package com.intranet.api.intranet.models.entities;
 
 import java.sql.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 public class Ausencias {
 
@@ -12,6 +14,7 @@ public class Ausencias {
     private Date fecha_resol;
     private Date fecha_inicio;
     private Date fecha_termino;
+    private Long dias_ausencia;
 
     public Ausencias(Integer ident, String descripcion, Integer linausencia, Date fecha_resol, Date fecha_inicio,
             Date fecha_termino) {
@@ -88,6 +91,32 @@ public class Ausencias {
 
     public void setResol(String resol) {
         this.resol = resol;
+    }
+
+    public Long getDias_ausencia() {
+        return dias_ausencia;
+    }
+
+    public void setDias_ausencia(Long dias_ausencia) {
+        this.dias_ausencia = dias_ausencia;
+    }
+
+   
+    public long calcularDiasHabiles(Date sqlStartDate, Date sqlEndDate) {
+        LocalDate startDate = sqlStartDate.toLocalDate();
+        LocalDate endDate = sqlEndDate.toLocalDate();
+
+        long workingDays = 0;
+
+        LocalDate date = startDate;
+        while (!date.isAfter(endDate)) {
+            if (date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                workingDays++;
+            }
+            date = date.plusDays(1);
+        }
+
+        return workingDays;
     }
 
     

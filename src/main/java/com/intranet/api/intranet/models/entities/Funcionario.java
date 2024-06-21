@@ -1,6 +1,5 @@
 package com.intranet.api.intranet.models.entities;
 
-import java.util.List;
 
 public class Funcionario extends Persona {
 
