@@ -4,16 +4,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.intranet.api.intranet.models.entities.Ausencias;
 import com.intranet.api.intranet.models.entities.Contratos;
 import com.intranet.api.intranet.models.entities.Departamentos;
 import com.intranet.api.intranet.models.entities.Funcionario;
 
-
 @Repository
 public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -32,8 +38,7 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         deptos.setDepto(rs.getString("depto"));
         deptos.setNombre_departamento(rs.getString("nombre_departamento"));
         deptos.setJefe_departamento(rs.getString("jefe_departamento")); // Corregido el nombre del campo
-  
-        
+
         return deptos;
     }
 
@@ -69,12 +74,10 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
                 "INNER JOIN CTE_contratos ON CTE_jefesdepto.DEPTO = CTE_contratos.depto " +
                 "INNER JOIN personas ON CTE_contratos.RUT = PERSONAS.RUT";
 
-                return jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToFuncionarios(rs));
+        return jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToFuncionarios(rs));
     }
 
-    
     private Funcionario mapRowToFuncionarios(ResultSet rs) throws SQLException {
- 
 
         Contratos contrato = new Contratos();
         contrato.setFechainicio(rs.getDate("fechaini"));
@@ -86,18 +89,15 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         depto.setDepto(rs.getString("depto"));
         depto.setNombre_departamento(rs.getString("nombre_departamento"));
         depto.setJefe_departamento(rs.getString("nombre_jefe"));
-      
+
         Funcionario funcionario = new Funcionario();
         funcionario.setRut(rs.getInt("rut"));
         funcionario.setNombres(rs.getString("nombres"));
         funcionario.setApellidopaterno(rs.getString("apellidopaterno"));
         funcionario.setApellidomaterno(rs.getString("apellidomaterno"));
         funcionario.setFecha_nac(rs.getDate("fecha_nacimiento"));
-        funcionario.setDepartemento(depto);
+        funcionario.setDepartamento(depto);
         funcionario.setContrato(contrato);
-
-    
-
 
         return funcionario;
     }
@@ -109,6 +109,32 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
                 .filter(funcionario -> rut.equals(funcionario.getRut()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public List<Ausencias> listAusencias(Integer rut) {
+        String sql = "SELECT ident, DESCTIPOAUSENCIA, rut, LINAUSENCIA, resol, FECHARESOL, FECHAINICIO, FECHATERMINO " +
+                "FROM PEAUSENCIAS " +
+                "INNER JOIN PETIPOSAUSENCIA ON PEAUSENCIAS.CODTIPOAUSENCIA = PETIPOSAUSENCIA.CODTIPOAUSENCIA " +
+                "WHERE PEAUSENCIAS.rut = :rut ";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("rut", rut);
+
+        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToAusencias(rs));
+    }
+
+    private Ausencias mapRowToAusencias(ResultSet rs) throws SQLException {
+        Ausencias ausencias = new Ausencias();
+        ausencias.setIdent(rs.getInt("ident"));
+        ausencias.setDescripcion(rs.getString("DESCTIPOAUSENCIA"));
+        ausencias.setRut(rs.getInt("rut"));
+        ausencias.setLinausencia(rs.getInt("LINAUSENCIA"));
+        ausencias.setResol(rs.getString("resol"));
+        ausencias.setFecha_resol(rs.getDate("FECHARESOL"));
+        ausencias.setFecha_inicio(rs.getDate("FECHAINICIO"));
+        ausencias.setFecha_termino(rs.getDate("FECHATERMINO"));
+        return ausencias;
     }
 
 }

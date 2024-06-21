@@ -1,22 +1,25 @@
 package com.intranet.api.intranet.models.entities;
 
+import java.util.List;
+
 public class Funcionario extends Persona {
 
 
 
-    private Departamentos departemento; 
+    private Departamentos departamento; 
     private Contratos contrato;
+
 
     public Funcionario(){
         super();
     }
 
-    public Departamentos getDepartemento() {
-        return departemento;
+    public Departamentos getDepartamento() {
+        return departamento;
     }
 
-    public void setDepartemento(Departamentos departemento) {
-        this.departemento = departemento;
+    public void setDepartamento(Departamentos departemento) {
+        this.departamento = departemento;
     }
 
     public Contratos getContrato() {
@@ -27,6 +30,11 @@ public class Funcionario extends Persona {
         this.contrato = contrato;
     }
 
+    
+   
+
+
+    
     
 
 

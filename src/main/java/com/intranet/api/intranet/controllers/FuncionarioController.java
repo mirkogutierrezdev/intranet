@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.intranet.api.intranet.models.entities.Ausencias;
 import com.intranet.api.intranet.models.entities.Departamentos;
 import com.intranet.api.intranet.models.entities.Funcionario;
 import com.intranet.api.intranet.services.IFuncionariosService;
@@ -16,7 +17,7 @@ import com.intranet.api.intranet.services.IFuncionariosService;
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api")
-public class DeptosController {
+public class FuncionarioController {
 
     @Autowired
     IFuncionariosService service;
@@ -38,6 +39,10 @@ public class DeptosController {
     @GetMapping("/buscar/{rut}")
     public Funcionario showFuncionario(@PathVariable Integer rut){
         return service.findByRut(rut);
+    }
+    @GetMapping("/ausencias/{rut}")
+    public List<Ausencias> showAusencias(@PathVariable Integer rut){
+        return service.listAusencias(rut);
     }
 
 }
