@@ -1,16 +1,13 @@
 package com.intranet.api.intranet.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.intranet.api.intranet.models.entities.Ausencias;
-import com.intranet.api.intranet.models.entities.Departamentos;
 import com.intranet.api.intranet.models.entities.Funcionario;
 import com.intranet.api.intranet.services.IFuncionariosService;
 
@@ -21,18 +18,14 @@ public class FuncionarioController {
 
     @Autowired
     IFuncionariosService service;
-
-  
-
-   
     
     @GetMapping("/buscar/{rut}")
     public Funcionario showFuncionario(@PathVariable Integer rut){
         return service.findByRut(rut);
     }
+
     @GetMapping("/ausencias/{rut}")
     public List<Ausencias> showAusencias(@PathVariable Integer rut){
         return service.listAusencias(rut);
     }
-
 }

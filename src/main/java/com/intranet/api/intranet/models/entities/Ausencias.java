@@ -13,16 +13,15 @@ public class Ausencias {
     private Long dias_ausencia;
     private Integer dias_feriados;
 
-    public Ausencias(Integer ident, String descripcion, Date fecha_inicio,
-            Date fecha_termino, Integer dias_feriados) {
+    public Ausencias() {
+    }
+
+    public Ausencias(Integer ident, String descripcion, Date fecha_inicio, Date fecha_termino, Integer dias_feriados) {
         this.ident = ident;
         this.descripcion = descripcion;
         this.fecha_inicio = fecha_inicio;
         this.fecha_termino = fecha_termino;
         this.dias_feriados = dias_feriados;
-    }
-
-    public Ausencias() {
     }
 
     public Integer getIdent() {
@@ -41,7 +40,6 @@ public class Ausencias {
         this.descripcion = descripcion;
     }
 
-
     public Date getFecha_inicio() {
         return fecha_inicio;
     }
@@ -58,10 +56,6 @@ public class Ausencias {
         this.fecha_termino = fecha_termino;
     }
 
-  
-
-
-
     public Long getDias_ausencia() {
         return dias_ausencia;
     }
@@ -70,6 +64,7 @@ public class Ausencias {
         this.dias_ausencia = dias_ausencia;
     }
 
+    //Metodo que calcula la cantidad de dias de trabajo , descontando sa
     public long calcularDiasHabiles(Date sqlStartDate, Date sqlEndDate) {
         LocalDate startDate = sqlStartDate.toLocalDate();
         LocalDate endDate = sqlEndDate.toLocalDate();

@@ -22,6 +22,7 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    @SuppressWarnings("unused")
     private final JdbcTemplate jdbcTemplate;
 
     public FuncionariosRepositoryImpl(JdbcTemplate jdbcTemplate) {
