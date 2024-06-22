@@ -8,6 +8,9 @@ public class Contratos {
     private Date fechatermino;
     private int licontrato;
     private String depto;
+    private String escalafon;
+    private String nombrecontrato;
+    private Integer grado;
 
     public Contratos(){
     }
@@ -43,4 +46,30 @@ public class Contratos {
     public void setDepto(String depto) {
         this.depto = depto;
     }
+
+    public String getEscalafon() {
+        return escalafon;
+    }
+
+    public void setEscalafon(String escalafon) {
+        this.escalafon = escalafon;
+    }
+
+    public String getNombrecontrato() {
+        return nombrecontrato;
+    }
+
+    public void setNombrecontrato(String nombrecontrato) {
+        this.nombrecontrato = nombrecontrato;
+    }
+
+    public Integer getGrado() {
+        return grado;
+    }
+
+    public void setGrado(Integer grado) {
+        this.grado = grado;
+    }
+
+    
 }

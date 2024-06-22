@@ -68,7 +68,7 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
 
 
     public Contratos buscaContrato(Integer rut) {
-        String sql = "SELECT contratos.rut, contratos.LINCONTRATO, contratos.FECHAINI, contratos.fechafin, " +
+        String sql = "SELECT contratos.rut,escala.grado ,contratos.LINCONTRATO, contratos.FECHAINI, contratos.fechafin, " +
                      "contratos.FECHARESOLCONTR, contratos.NUMRESOLCONTR, contratomes.depto, " +
                      "(SELECT nombretipocontrato FROM retiposcontrato z WHERE contratomes.IDENT = z.IDENT AND contratomes.CODTIPOCONTRATO = z.CODTIPOCONTRATO) AS tipo_contrato, " +
                      "(SELECT NOMBREESCALAFON FROM REESCALAFONES x WHERE x.IDENT = contratomes.IDENT AND x.CODESCALAFON = contratomes.CODESCALAFON) AS escalafon " +
@@ -94,6 +94,9 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         contrato.setFechainicio(rs.getDate("FECHAINI"));
         contrato.setFechatermino(rs.getDate("fechafin"));
         contrato.setDepto(rs.getString("depto"));
+        contrato.setEscalafon(rs.getString("escalafon"));
+        contrato.setNombrecontrato(rs.getString("tipo_contrato"));
+        contrato.setGrado(rs.getInt("grado"));
       
         return contrato;
     }
