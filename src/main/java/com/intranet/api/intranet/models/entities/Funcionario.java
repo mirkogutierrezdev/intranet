@@ -1,5 +1,6 @@
 package com.intranet.api.intranet.models.entities;
 
+import java.util.List;
 
 public class Funcionario extends Persona {
 
@@ -7,6 +8,8 @@ public class Funcionario extends Persona {
     private String area;
     private Departamentos departamento; 
     private Contratos contrato;
+    private List<Ausencias> ausencias;
+    private List<Feriados> feriados;
 
 
     public Funcionario(){
@@ -43,11 +46,31 @@ public class Funcionario extends Persona {
         this.area = area;
     }
 
-    
+
+
+    public List<Feriados> getFeriados() {
+        return feriados;
+    }
+
+
+
+    public void setFeriados(List<Feriados> feriado) {
+        this.feriados = feriado;
+    }
+
+
+
+    public List<Ausencias> getAusencias() {
+        return ausencias;
+    }
+
+
+
+    public void setAusencias(List<Ausencias> ausencias) {
+        this.ausencias = ausencias;
+    }
+
    
-
-
-    
     
 
 

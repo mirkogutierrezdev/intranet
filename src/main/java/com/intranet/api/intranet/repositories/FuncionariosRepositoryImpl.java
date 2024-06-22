@@ -2,6 +2,7 @@ package com.intranet.api.intranet.repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.intranet.api.intranet.models.entities.Ausencias;
 import com.intranet.api.intranet.models.entities.Contratos;
 import com.intranet.api.intranet.models.entities.Departamentos;
+import com.intranet.api.intranet.models.entities.Feriados;
 import com.intranet.api.intranet.models.entities.Funcionario;
 
 @Repository
@@ -62,6 +64,14 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         Departamentos depto = buscaDepartamento(contrato.getDepto());
 
         funcionario.setDepartamento(depto);
+
+        List<Ausencias> ausencias = listAusencias(funcionario.getRut());
+
+        funcionario.setAusencias(ausencias);
+
+        List<Feriados> feriado = buscaFeriados(funcionario.getRut());
+
+        funcionario.setFeriados(feriado);
 
         return funcionario;
     }
@@ -123,7 +133,36 @@ public Departamentos buscaDepartamento(String depto) {
         return depto;
     }
 
-    @Override
+    public List<Feriados> buscaFeriados(Integer rut) {
+        int currentYear = LocalDate.now().getYear();
+        int currentMonth = LocalDate.now().getMonthValue();
+    
+        String sql = "exec ppefuncdiasferiados 1, :rut, :rut, :currentYear, :currentMonth";
+    
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("rut", rut);
+        params.addValue("currentYear", currentYear);
+        params.addValue("currentMonth", currentMonth);
+    
+        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowFeriado(rs));
+    }
+
+    private Feriados mapRowFeriado(ResultSet rs) throws SQLException {
+
+        Feriados feriados = new Feriados();
+        feriados.setAnio(rs.getInt("ano"));
+        feriados.setCorresponde(rs.getInt("corresponde"));
+        feriados.setAcumulado(rs.getInt("acumuladoant"));
+        feriados.setTotalDias(rs.getInt("totaldias"));
+        feriados.setDiasTomados(rs.getInt("diastomados"));
+        feriados.setDiasPendientes(rs.getInt("diaspendientes"));
+        feriados.setBaseCalculo(rs.getInt("base"));
+        
+      
+        return feriados;
+    }
+
+        
     public List<Ausencias> listAusencias(Integer rut) {
         String sql = "SELECT " +
                 "    ident, DESCTIPOAUSENCIA, rut, LINAUSENCIA, resol, FECHARESOL, FECHAINICIO, FECHATERMINO, " +
