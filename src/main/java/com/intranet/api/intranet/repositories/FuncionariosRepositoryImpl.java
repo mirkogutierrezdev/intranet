@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -28,125 +29,132 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
     }
 
     @Override
-    public List<Departamentos> findAll() {
-        String sql = "SELECT depto, nombre_departamento, jefe_departamento, cargo_jefe, login FROM departamentos";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToDepartamentos(rs));
+    public Funcionario findByRut(Integer rut) {
+        String sql = "SELECT personas.rut, APELLIDOPATERNO, APELLIDOMATERNO, nombres, FECHA_NACIMIENTO, ident, " +
+                     "(SELECT DENOMINACION FROM DOMINIOS WHERE COD_DOMINIO = 1 AND COD_SISTEMA = 're') AS area " +
+                     "FROM personas " +
+                     "INNER JOIN REFUNCIONARIOS ON personas.rut = REFUNCIONARIOS.rut " +
+                     "WHERE personas.rut = :rut AND ident = 1";
+    
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("rut", rut);
+    
+        List<Funcionario> funcionarios = namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToFuncionario(rs));
+        
+        return funcionarios.isEmpty() ? null : funcionarios.get(0);
     }
 
-    private Departamentos mapRowToDepartamentos(ResultSet rs) throws SQLException {
-        Departamentos deptos = new Departamentos();
-        deptos.setDepto(rs.getString("depto"));
-        deptos.setNombre_departamento(rs.getString("nombre_departamento"));
-        deptos.setJefe_departamento(rs.getString("jefe_departamento")); // Corregido el nombre del campo
-
-        return deptos;
-    }
-
-    @Override
-    public List<Funcionario> listFuncionarios() {
-
-        String sql = "WITH CTE_jefesdepto AS ( " +
-                "    SELECT departamentos.depto, departamentos.nombre_departamento, NOMBRE_USUARIO " +
-                "    FROM departamentos " +
-                "    INNER JOIN usuarios ON departamentos.login = usuarios.login " +
-                "), " +
-                "CTE_contratos AS ( " +
-                "    SELECT rut, LINCONTRATO, FECHAINI, FECHAFIN, 'depto' = ( " +
-                "        SELECT depto " +
-                "        FROM recontratomes AS z " +
-                "        WHERE RECONTRATOS.IDENT = z.IDENT AND RECONTRATOS.rut = z.RUT AND z.LINCONTRATO = RECONTRATOS.LINCONTRATO "
-                +
-                "          AND z.LINCONTRATO = ( " +
-                "            SELECT max(lincontrato) " +
-                "            FROM RECONTRATOMES x " +
-                "            WHERE z.IDENT = z.IDENT AND z.RUT = x.RUT AND z.LINCONTRATO = x.LINCONTRATO " +
-                "              AND z.ANOREMUN = x.ANOREMUN AND z.MESREMUN = z.MESREMUN AND z.ANOREMUN = year(getdate()) AND z.MESREMUN = 6) "
-                +
-                "    ) " +
-                "    FROM RECONTRATOS " +
-                "    WHERE FECHAINI <= CONVERT(date, getdate(), 104) " +
-                "      AND (fechafin IS NULL OR fechafin >= CONVERT(date, getdate(), 104)) " +
-                ") " +
-                "SELECT CTE_jefesdepto.depto, NOMBRE_DEPARTAMENTO, NOMBRE_USUARIO AS nombre_jefe, CTE_contratos.rut, LINCONTRATO, FECHAINI, FECHAFIN, "
-                +
-                "       APELLIDOPATERNO, APELLIDOMATERNO, nombres, FECHA_NACIMIENTO " +
-                "FROM CTE_jefesdepto " +
-                "INNER JOIN CTE_contratos ON CTE_jefesdepto.DEPTO = CTE_contratos.depto " +
-                "INNER JOIN personas ON CTE_contratos.RUT = PERSONAS.RUT";
-
-        return jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToFuncionarios(rs));
-    }
-
-    private Funcionario mapRowToFuncionarios(ResultSet rs) throws SQLException {
-
-        Contratos contrato = new Contratos();
-        contrato.setFechainicio(rs.getDate("fechaini"));
-        contrato.setFechatermino(rs.getDate("fechafin"));
-        contrato.setLicontrato(rs.getInt("lincontrato"));
-
-        Departamentos depto = new Departamentos();
-
-        depto.setDepto(rs.getString("depto"));
-        depto.setNombre_departamento(rs.getString("nombre_departamento"));
-        depto.setJefe_departamento(rs.getString("nombre_jefe"));
+    private Funcionario mapRowToFuncionario(ResultSet rs) throws SQLException {
 
         Funcionario funcionario = new Funcionario();
         funcionario.setRut(rs.getInt("rut"));
         funcionario.setNombres(rs.getString("nombres"));
-        funcionario.setApellidopaterno(rs.getString("apellidopaterno"));
-        funcionario.setApellidomaterno(rs.getString("apellidomaterno"));
-        funcionario.setFecha_nac(rs.getDate("fecha_nacimiento"));
-        funcionario.setDepartamento(depto);
+        funcionario.setApellidopaterno(rs.getString("APELLIDOPATERNO"));
+        funcionario.setApellidomaterno(rs.getString("APELLIDOMATERNO"));
+        funcionario.setFecha_nac(rs.getDate("FECHA_NACIMIENTO"));
+        funcionario.setArea(rs.getString("area"));
+
+        Contratos contrato = buscaContrato(funcionario.getRut());
+
         funcionario.setContrato(contrato);
+
+        Departamentos depto = buscaDepartamento(contrato.getDepto());
+
+        funcionario.setDepartamento(depto);
 
         return funcionario;
     }
 
-    @Override
-    public Funcionario findByRut(Integer rut) {
-        List<Funcionario> funcionarios = listFuncionarios();
-        return funcionarios.stream()
-                .filter(funcionario -> rut.equals(funcionario.getRut()))
-                .findFirst()
-                .orElse(null);
+
+    public Contratos buscaContrato(Integer rut) {
+        String sql = "SELECT contratos.rut, contratos.LINCONTRATO, contratos.FECHAINI, contratos.fechafin, " +
+                     "contratos.FECHARESOLCONTR, contratos.NUMRESOLCONTR, contratomes.depto, " +
+                     "(SELECT nombretipocontrato FROM retiposcontrato z WHERE contratomes.IDENT = z.IDENT AND contratomes.CODTIPOCONTRATO = z.CODTIPOCONTRATO) AS tipo_contrato, " +
+                     "(SELECT NOMBREESCALAFON FROM REESCALAFONES x WHERE x.IDENT = contratomes.IDENT AND x.CODESCALAFON = contratomes.CODESCALAFON) AS escalafon " +
+                     "FROM RECONTRATOS AS contratos " +
+                     "INNER JOIN RECONTRATOMES contratomes ON contratos.IDENT = contratomes.IDENT AND contratos.rut = contratomes.RUT AND contratos.LINCONTRATO = contratomes.LINCONTRATO " +
+                     "INNER JOIN RECONTESCALA escala ON contratos.IDENT = escala.IDENT AND contratos.RUT = escala.RUT AND contratomes.ANOREMUN = escala.ANOREMUN AND contratomes.MESREMUN = escala.MESREMUN AND contratomes.LINCONTRATO = escala.LINCONTRATO " +
+                     "WHERE contratomes.ANOREMUN = YEAR(GETDATE()) AND contratomes.MESREMUN = MONTH(DATEADD(month, -1, GETDATE())) " +
+                     "AND contratomes.LINCONTRATO = (SELECT MAX(lincontrato) FROM recontratomes x WHERE contratomes.IDENT = x.IDENT AND contratomes.rut = x.rut AND contratomes.ANOREMUN = x.ANOREMUN AND contratomes.MESREMUN = x.MESREMUN AND contratomes.LINCONTRATO = x.LINCONTRATO) " +
+                     "AND contratos.FECHAINI <= CONVERT(date, GETDATE(), 104) " +
+                     "AND (contratos.fechafin IS NULL OR contratos.fechafin >= CONVERT(date, GETDATE(), 104)) " +
+                     "AND contratos.RUT = :rut";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("rut", rut);
+
+        return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToContrato(rs));
     }
 
-   
-    @Override
-public List<Ausencias> listAusencias(Integer rut) {
-    String sql = "SELECT " +
-                 "    ident, DESCTIPOAUSENCIA, rut, LINAUSENCIA, resol, FECHARESOL, FECHAINICIO, FECHATERMINO, " +
-                 "    PEAUSENCIAS.CODTIPOAUSENCIA, " +
-                 "    (SELECT COUNT(*) " +
-                 "     FROM FERIADOS " +
-                 "     WHERE YEAR(FERIADO) = YEAR(PEAUSENCIAS.FECHAINICIO) " +
-                 "       AND MONTH(FERIADO) BETWEEN MONTH(PEAUSENCIAS.FECHAINICIO) AND MONTH(PEAUSENCIAS.FECHATERMINO) " +
-                 "       AND DAY(FERIADO) BETWEEN DAY(PEAUSENCIAS.FECHAINICIO) AND DAY(PEAUSENCIAS.FECHATERMINO) " +
-                 "    ) as feriados_mes " +
-                 "FROM PEAUSENCIAS " +
-                 "INNER JOIN PETIPOSAUSENCIA ON PEAUSENCIAS.CODTIPOAUSENCIA = PETIPOSAUSENCIA.CODTIPOAUSENCIA " +
-                 "WHERE PEAUSENCIAS.rut = :rut";
+    private Contratos mapRowToContrato(ResultSet rs) throws SQLException {
+        Contratos contrato = new Contratos();
+     
+        contrato.setLicontrato(rs.getInt("LINCONTRATO"));
+        contrato.setFechainicio(rs.getDate("FECHAINI"));
+        contrato.setFechatermino(rs.getDate("fechafin"));
+        contrato.setDepto(rs.getString("depto"));
+      
+        return contrato;
+    }
+
+public Departamentos buscaDepartamento(String depto) {
+    String sql = "SELECT depto, NOMBRE_DEPARTAMENTO, JEFE_DEPARTAMENTO, CARGO_JEFE FROM DEPARTAMENTOS " +
+                 "WHERE depto = :depto";
 
     MapSqlParameterSource params = new MapSqlParameterSource();
-    params.addValue("rut", rut);
+    params.addValue("depto", depto);
 
-    return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToAusencias(rs));
+    try {
+        return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToDepartamento(rs));
+    } catch (EmptyResultDataAccessException e) {
+        return null; // Return null if no result is found
+    }
 }
+    private Departamentos mapRowToDepartamento(ResultSet rs) throws SQLException {
+        Departamentos depto = new Departamentos();
+        depto.setDepto(rs.getString("depto"));
+        depto.setNombre_departamento(rs.getString("NOMBRE_DEPARTAMENTO"));
+        depto.setJefe_departamento(rs.getString("JEFE_DEPARTAMENTO"));
+        depto.setCargo_jefe(rs.getString("CARGO_JEFE"));
+        return depto;
+    }
 
+    @Override
+    public List<Ausencias> listAusencias(Integer rut) {
+        String sql = "SELECT " +
+                "    ident, DESCTIPOAUSENCIA, rut, LINAUSENCIA, resol, FECHARESOL, FECHAINICIO, FECHATERMINO, " +
+                "    PEAUSENCIAS.CODTIPOAUSENCIA, " +
+                "    (SELECT COUNT(*) " +
+                "     FROM FERIADOS " +
+                "     WHERE YEAR(FERIADO) = YEAR(PEAUSENCIAS.FECHAINICIO) " +
+                "       AND MONTH(FERIADO) BETWEEN MONTH(PEAUSENCIAS.FECHAINICIO) AND MONTH(PEAUSENCIAS.FECHATERMINO) "
+                +
+                "       AND DAY(FERIADO) BETWEEN DAY(PEAUSENCIAS.FECHAINICIO) AND DAY(PEAUSENCIAS.FECHATERMINO) " +
+                "    ) as feriados_mes " +
+                "FROM PEAUSENCIAS " +
+                "INNER JOIN PETIPOSAUSENCIA ON PEAUSENCIAS.CODTIPOAUSENCIA = PETIPOSAUSENCIA.CODTIPOAUSENCIA " +
+                "WHERE PEAUSENCIAS.rut = :rut";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("rut", rut);
+
+        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToAusencias(rs));
+    }
 
     private Ausencias mapRowToAusencias(ResultSet rs) throws SQLException {
         Ausencias ausencias = new Ausencias();
         ausencias.setIdent(rs.getInt("ident"));
         ausencias.setDescripcion(rs.getString("DESCTIPOAUSENCIA"));
-      
+
         ausencias.setFecha_inicio(rs.getDate("FECHAINICIO"));
         ausencias.setFecha_termino(rs.getDate("FECHATERMINO"));
         ausencias.setDias_feriados(rs.getInt("feriados_mes"));
 
-        Integer dias_feriados = ausencias.getDias_feriados();
+        
 
         ausencias.setDias_ausencia(
-                ausencias.calcularDiasHabiles(ausencias.getFecha_inicio(), ausencias.getFecha_termino())-dias_feriados);
+                ausencias.calcularDiasHabiles(ausencias.getFecha_inicio(), ausencias.getFecha_termino())
+                        - ausencias.getDias_feriados());
         return ausencias;
     }
 

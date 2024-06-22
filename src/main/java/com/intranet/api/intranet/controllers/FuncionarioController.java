@@ -22,19 +22,9 @@ public class FuncionarioController {
     @Autowired
     IFuncionariosService service;
 
-    @GetMapping("/listdeptos")
-    public List<Departamentos> show(){
-        return service.findAll();
-     
+  
 
-
-    }
-
-    @GetMapping("/listjefes")
-    public List<Funcionario> showList(){
-        return service.listFuncionarios();
-    }
-    
+   
     
     @GetMapping("/buscar/{rut}")
     public Funcionario showFuncionario(@PathVariable Integer rut){

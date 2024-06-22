@@ -8,6 +8,7 @@ public class Contratos {
     private Date fechainicio;
     private Date fechatermino;
     private int licontrato;
+    private String depto;
 
     public Contratos(){
 
@@ -33,6 +34,18 @@ public class Contratos {
     }
     public void setLicontrato(int licontrato) {
         this.licontrato = licontrato;
+    }
+
+
+
+    public String getDepto() {
+        return depto;
+    }
+
+
+
+    public void setDepto(String depto) {
+        this.depto = depto;
     }
 
 

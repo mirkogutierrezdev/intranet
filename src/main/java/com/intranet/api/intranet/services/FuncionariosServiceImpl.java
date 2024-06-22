@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.intranet.api.intranet.models.entities.Ausencias;
-import com.intranet.api.intranet.models.entities.Departamentos;
+
 import com.intranet.api.intranet.models.entities.Funcionario;
 import com.intranet.api.intranet.repositories.IFuncionariossRepository;
 
@@ -16,17 +16,8 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
     @Autowired
     public IFuncionariossRepository repository;
 
-    @Override
-    public List<Departamentos> findAll() {
-
-        return repository.findAll();
-        
-    }
-
-    @Override
-    public List<Funcionario> listFuncionarios() {
-       return repository.listFuncionarios();
-    }
+ 
+   
 
     @Override
     public Funcionario findByRut(Integer rut) {
