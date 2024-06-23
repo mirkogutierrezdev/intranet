@@ -17,6 +17,7 @@ import com.intranet.api.intranet.models.entities.Contratos;
 import com.intranet.api.intranet.models.entities.Departamentos;
 import com.intranet.api.intranet.models.entities.Feriados;
 import com.intranet.api.intranet.models.entities.Funcionario;
+import com.intranet.api.intranet.models.entities.LicienciaMedica;
 
 @Repository
 public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
@@ -65,13 +66,17 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
 
         funcionario.setDepartamento(depto);
 
-        List<Ausencias> ausencias = listAusencias(funcionario.getRut());
+        List<Ausencias> ausencias = buscaAusencias(funcionario.getRut());
 
         funcionario.setAusencias(ausencias);
 
         List<Feriados> feriado = buscaFeriados(funcionario.getRut());
 
         funcionario.setFeriados(feriado);
+
+        List<LicienciaMedica> licencias = buscaLicencias(funcionario.getRut());
+
+        funcionario.setLicencias(licencias);
 
         return funcionario;
     }
@@ -163,7 +168,7 @@ public Departamentos buscaDepartamento(String depto) {
     }
 
         
-    public List<Ausencias> listAusencias(Integer rut) {
+    public List<Ausencias> buscaAusencias(Integer rut) {
         String sql = "SELECT " +
                 "    ident, DESCTIPOAUSENCIA, rut, LINAUSENCIA, resol, FECHARESOL, FECHAINICIO, FECHATERMINO, " +
                 "    PEAUSENCIAS.CODTIPOAUSENCIA, " +
@@ -176,7 +181,7 @@ public Departamentos buscaDepartamento(String depto) {
                 "    ) as feriados_mes " +
                 "FROM PEAUSENCIAS " +
                 "INNER JOIN PETIPOSAUSENCIA ON PEAUSENCIAS.CODTIPOAUSENCIA = PETIPOSAUSENCIA.CODTIPOAUSENCIA " +
-                "WHERE PEAUSENCIAS.rut = :rut";
+                "WHERE PEAUSENCIAS.rut = :rut order by fechainicio desc";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
@@ -200,5 +205,47 @@ public Departamentos buscaDepartamento(String depto) {
                         - ausencias.getDias_feriados());
         return ausencias;
     }
+
+    public List<LicienciaMedica> buscaLicencias(Integer rut) {
+        String sql = "select  \r\n" + //
+                        "NUMLIC,\r\n" + //
+                        "FECHAINI,\r\n" + //
+                        " isnull( (select NOMBREISAPRE from REISAPRES z where z.CODISAPRE=LMLICENCIAS.CODISAPRE),'Fonasa' ) as prevision,\r\n" + //
+                        " (select nombreafp from REAFP z where z.CODAFP=LMLICENCIAS.CODAFP) as AFP,\r\n" + //
+                        " DIASLIC,\r\n" + //
+                        " (select DESCTIPOLIC from LMTIPOLICENCIA y where y.CODTIPOLIC=LMLICENCIAS.CODTIPOLIC) as tipo_licencia,\r\n" + //
+                        " FECHAEMISION,\r\n" + //
+                        " FECHARECEPCION,\r\n" + //
+                        " RUT_PROFESIONAL,\r\n" + //
+                        " NOMBRE_PROFESIONAL from LMLICENCIAS\r\n" + //
+                        "where ident=1 and rut = :rut ";
+               
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("rut", rut);
+
+        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToLicenciasMedicas(rs));
+    }
+
+    private LicienciaMedica mapRowToLicenciasMedicas(ResultSet rs) throws SQLException {
+
+        LicienciaMedica lm = new LicienciaMedica();
+        lm.setNumlic(rs.getLong("numlic"));
+        lm.setFechaInicio(rs.getDate("fechaini"));
+        lm.setPrevision(rs.getString("prevision"));
+        lm.setAfp(rs.getString("afp"));
+        lm.setDiasLic(rs.getInt("diaslic"));
+        lm.setTipoLicencia(rs.getString("tipo_licencia"));
+        lm.setFechaEmision(rs.getDate("fechaemision"));
+        lm.setFechaRecepcion(rs.getDate("fecharecepcion"));
+        lm.setRutMedico(rs.getString("rut_profesional"));
+        lm.setNombreProfesional(rs.getString("nombre_profesional"));
+      
+        return lm;
+    }
+
+
+
+
 
 }

@@ -10,6 +10,7 @@ public class Funcionario extends Persona {
     private Contratos contrato;
     private List<Ausencias> ausencias;
     private List<Feriados> feriados;
+    private List<LicienciaMedica> licencias;
 
 
     public Funcionario(){
@@ -69,6 +70,20 @@ public class Funcionario extends Persona {
     public void setAusencias(List<Ausencias> ausencias) {
         this.ausencias = ausencias;
     }
+
+
+
+    public List<LicienciaMedica> getLicencias() {
+        return licencias;
+    }
+
+
+
+    public void setLicencias(List<LicienciaMedica> licencias) {
+        this.licencias = licencias;
+    }
+
+    
 
    
     
