@@ -33,6 +33,4 @@ public class FuncionarioController {
     public DetalleLM showDetalleLm(@PathVariable Long numlic){
         return serviceLm.buscDetalleLM(numlic);
     }
-
-   
 }
