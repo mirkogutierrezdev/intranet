@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-
+import com.intranet.api.intranet.models.entities.DetalleLM;
 import com.intranet.api.intranet.models.entities.LicienciaMedica;
 
 @Repository
@@ -17,6 +17,9 @@ public class LicenciasMedicasRepositoryImpl implements ILicenciasMedicasReposito
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private IDetalleLMRepository detalleLMRepository;
 
 
     @Override
@@ -56,10 +59,18 @@ public class LicenciasMedicasRepositoryImpl implements ILicenciasMedicasReposito
         lm.setRutMedico(rs.getString("rut_profesional"));
         lm.setNombreProfesional(rs.getString("nombre_profesional"));
 
+        lm.setDetalleLM(detalleLic(lm));
+
 
 
 
         return lm;
     }
 
+    private DetalleLM detalleLic(LicienciaMedica licienciaMedica){
+
+        DetalleLM detalle = detalleLMRepository.buscaDetalleLm(licienciaMedica.getNumlic());
+
+        return detalle;
+    }
 }

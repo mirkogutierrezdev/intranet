@@ -15,6 +15,8 @@ public class LicienciaMedica {
     private String rutMedico;
     private String nombreProfesional;
     private String tipoLicencia;
+    
+    private DetalleLM detalleLM;
 
 
     public LicienciaMedica(){
@@ -101,6 +103,16 @@ public class LicienciaMedica {
     public void setTipoLicencia(String tipoLicencia) {
         this.tipoLicencia = tipoLicencia;
     }
+
+    public DetalleLM getDetalleLM() {
+        return detalleLM;
+    }
+
+    public void setDetalleLM(DetalleLM detalleLM) {
+        this.detalleLM = detalleLM;
+    }
+
+    
 
  
 

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.intranet.api.intranet.models.entities.DetalleLM;
+
 import com.intranet.api.intranet.models.entities.Funcionario;
-import com.intranet.api.intranet.services.IDetalleLmServices;
+
 import com.intranet.api.intranet.services.IFuncionariosService;
 
 @RestController
@@ -21,16 +21,12 @@ public class FuncionarioController {
     @Autowired
     IFuncionariosService service;
 
-    @Autowired
-    IDetalleLmServices serviceLm;
+  
     
     @GetMapping("/buscar/{rut}")
     public Funcionario showFuncionario(@PathVariable Integer rut){
         return service.findByRut(rut);
     }
 
-    @GetMapping("/detallelic/{numlic}")
-    public DetalleLM showDetalleLm(@PathVariable Long numlic){
-        return serviceLm.buscDetalleLM(numlic);
-    }
+  
 }
