@@ -31,7 +31,7 @@ public class AusenciasRepositoryImpl implements IAusenciasRespository {
                 "    ) as feriados_mes " +
                 "FROM PEAUSENCIAS " +
                 "INNER JOIN PETIPOSAUSENCIA ON PEAUSENCIAS.CODTIPOAUSENCIA = PETIPOSAUSENCIA.CODTIPOAUSENCIA " +
-                "WHERE PEAUSENCIAS.rut = :rut order by fechainicio desc";
+                "WHERE PEAUSENCIAS.rut = :rut and FECHAINICIO >= (select FECHACORTEFLEGAL from PEINICIALES z where z.IDENT = PEAUSENCIAS.IDENT and z.RUT=PEAUSENCIAS.RUT ) order by fechainicio desc";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);

@@ -5,16 +5,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intranet.api.intranet.models.entities.Ausencias;
 import com.intranet.api.intranet.models.entities.Contratos;
 import com.intranet.api.intranet.models.entities.Departamentos;
+
 import com.intranet.api.intranet.models.entities.Feriados;
 import com.intranet.api.intranet.models.entities.Funcionario;
 import com.intranet.api.intranet.models.entities.LicienciaMedica;
 import com.intranet.api.intranet.repositories.IAusenciasRespository;
 import com.intranet.api.intranet.repositories.IContratosRepository;
 import com.intranet.api.intranet.repositories.IDepartamentosRepository;
+
 import com.intranet.api.intranet.repositories.IFeriadosRepository;
 import com.intranet.api.intranet.repositories.IFuncionariossRepository;
 import com.intranet.api.intranet.repositories.ILicenciasMedicasRepository;
@@ -41,9 +44,12 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
     @Autowired
     private ILicenciasMedicasRepository licenciasMedicasRepository;
 
+  
+
 
 
     @Override
+    @Transactional
     public Funcionario findByRut(Integer rut) {
        
         Funcionario funcionario = repository.findByRut(rut);
