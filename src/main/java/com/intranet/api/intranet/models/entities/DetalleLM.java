@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class DetalleLM {
 
-    private Date fechaInico;
+    private Date fechaInicio;
     private Date fechaFin;
     private Integer diasPago;
     private Long imponiblePromedio;
@@ -22,12 +22,12 @@ public class DetalleLM {
 
     
 
-    public Date getFechaInico() {
-        return fechaInico;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setFechaInico(Date fechaInico) {
-        this.fechaInico = fechaInico;
+    public void setFechaInicio(Date fechaInico) {
+        this.fechaInicio = fechaInico;
     }
 
     public Date getFechaFin() {

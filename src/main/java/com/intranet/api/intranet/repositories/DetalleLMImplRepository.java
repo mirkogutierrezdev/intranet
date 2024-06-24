@@ -38,7 +38,7 @@ public class DetalleLMImplRepository implements IDetalleLMRepository {
 
         DetalleLM lmDetalle = new DetalleLM();
 
-        lmDetalle.setFechaInico(rs.getDate("fechaini"));
+        lmDetalle.setFechaInicio(rs.getDate("fechaini"));
         lmDetalle.setFechaFin(rs.getDate("fechafin"));
         lmDetalle.setDiasPago(rs.getInt("diasapagar"));
         lmDetalle.setImponiblePromedio( rs.getLong("imponibleprom"));
