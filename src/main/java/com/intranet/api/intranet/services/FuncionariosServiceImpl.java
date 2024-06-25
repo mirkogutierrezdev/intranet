@@ -10,14 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.intranet.api.intranet.models.entities.Ausencias;
 import com.intranet.api.intranet.models.entities.Contratos;
 import com.intranet.api.intranet.models.entities.Departamentos;
-
+import com.intranet.api.intranet.models.entities.DiasAdm;
 import com.intranet.api.intranet.models.entities.Feriados;
 import com.intranet.api.intranet.models.entities.Funcionario;
 import com.intranet.api.intranet.models.entities.LicienciaMedica;
 import com.intranet.api.intranet.repositories.IAusenciasRespository;
 import com.intranet.api.intranet.repositories.IContratosRepository;
 import com.intranet.api.intranet.repositories.IDepartamentosRepository;
-
+import com.intranet.api.intranet.repositories.IDiasAdmRespository;
 import com.intranet.api.intranet.repositories.IFeriadosRepository;
 import com.intranet.api.intranet.repositories.IFuncionariossRepository;
 import com.intranet.api.intranet.repositories.ILicenciasMedicasRepository;
@@ -43,6 +43,9 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
 
     @Autowired
     private ILicenciasMedicasRepository licenciasMedicasRepository;
+
+    @Autowired
+    private IDiasAdmRespository diasAdmRespository;
 
   
 
@@ -73,6 +76,10 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
         List<LicienciaMedica> licencias  = licenciasMedicasRepository.buscaLicencias(rut);
 
         funcionario.setLicencias(licencias);
+
+        DiasAdm diasAdm = diasAdmRespository.consultaSaldo(rut);
+        funcionario.setDiasAdm(diasAdm);
+
 
 
 
