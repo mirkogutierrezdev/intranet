@@ -97,10 +97,6 @@ public class Funcionario extends Persona {
     }
 
     
-<<<<<<< HEAD
-=======
-
->>>>>>> 94fa738b851cabda0523e39861958690f54020ad
     
 
    

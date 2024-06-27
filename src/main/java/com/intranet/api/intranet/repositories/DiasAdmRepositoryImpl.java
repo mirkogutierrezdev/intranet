@@ -40,8 +40,9 @@ public class DiasAdmRepositoryImpl implements IDiasAdmRespository {
     private DiasAdm mapRowToDiasAdm(ResultSet rs) throws SQLException {
         DiasAdm diasAdm = new DiasAdm();
 
-        diasAdm.setMaximoDias(rs.getInt("maximodiasadm"));
-        diasAdm.setDiasUsados(rs.getDouble("diasusados"));
+        diasAdm.setMaximo(rs.getInt("maximodiasadm"));
+        diasAdm.setUsados(rs.getDouble("diasusados"));
+        diasAdm.setSaldo(diasAdm.getMaximo()-diasAdm.getUsados());
         return diasAdm;
     }
 
