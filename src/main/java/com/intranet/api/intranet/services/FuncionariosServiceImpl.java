@@ -18,7 +18,7 @@ import com.intranet.api.intranet.models.entities.mysql.IDiasAdmRespository;
 import com.intranet.api.intranet.repositories.IAusenciasRespository;
 import com.intranet.api.intranet.repositories.IContratosRepository;
 import com.intranet.api.intranet.repositories.IDepartamentosRepository;
-
+import com.intranet.api.intranet.repositories.IDiasAdmRespository;
 import com.intranet.api.intranet.repositories.IFeriadosRepository;
 import com.intranet.api.intranet.repositories.IFuncionariossRepository;
 import com.intranet.api.intranet.repositories.ILicenciasMedicasRepository;
@@ -78,10 +78,17 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
 
         funcionario.setLicencias(licencias);
 
+<<<<<<< HEAD
         DiasAdm diasAdm = diasAdmRespository.buscDiasAdm(rut);
 
         funcionario.setDiasAdm(diasAdm);
 
+=======
+        DiasAdm diasAdm = diasAdmRespository.consultaSaldo(rut);
+        funcionario.setDiasAdm(diasAdm);
+
+
+>>>>>>> 94fa738b851cabda0523e39861958690f54020ad
 
 
         return funcionario;
