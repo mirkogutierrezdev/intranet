@@ -11,6 +11,7 @@ public class Funcionario extends Persona {
     private List<Ausencias> ausencias;
     private List<Feriados> feriados;
     private List<LicienciaMedica> licencias;
+    private DiasAdm diasAdm;
 
 
     public Funcionario(){
@@ -83,6 +84,19 @@ public class Funcionario extends Persona {
         this.licencias = licencias;
     }
 
+
+
+    public DiasAdm getDiasAdm() {
+        return diasAdm;
+    }
+
+
+
+    public void setDiasAdm(DiasAdm diasAdm) {
+        this.diasAdm = diasAdm;
+    }
+
+    
     
 
    
