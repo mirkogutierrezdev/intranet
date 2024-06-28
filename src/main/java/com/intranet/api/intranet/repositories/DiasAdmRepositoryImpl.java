@@ -15,10 +15,8 @@ import com.intranet.api.intranet.models.entities.DiasAdm;
 @Repository
 public class DiasAdmRepositoryImpl implements IDiasAdmRespository {
 
-    
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
 
     @Override
     public DiasAdm consultaSaldo(Integer rut) {
@@ -42,8 +40,7 @@ public class DiasAdmRepositoryImpl implements IDiasAdmRespository {
 
         diasAdm.setMaximo(rs.getInt("maximodiasadm"));
         diasAdm.setUsados(rs.getDouble("diasusados"));
-        diasAdm.setSaldo(diasAdm.getMaximo()-diasAdm.getUsados());
+        diasAdm.setSaldo(diasAdm.getMaximo() - diasAdm.getUsados());
         return diasAdm;
     }
-
 }

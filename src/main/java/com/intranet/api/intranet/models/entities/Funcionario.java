@@ -18,8 +18,6 @@ public class Funcionario extends Persona {
         super();
     }
 
-    
-
     public Departamentos getDepartamento() {
         return departamento;
     }
@@ -36,72 +34,43 @@ public class Funcionario extends Persona {
         this.contrato = contrato;
     }
 
-
-
     public String getArea() {
         return area;
     }
-
-
 
     public void setArea(String area) {
         this.area = area;
     }
 
-
-
     public List<Feriados> getFeriados() {
         return feriados;
     }
-
-
 
     public void setFeriados(List<Feriados> feriado) {
         this.feriados = feriado;
     }
 
-
-
     public List<Ausencias> getAusencias() {
         return ausencias;
     }
-
-
 
     public void setAusencias(List<Ausencias> ausencias) {
         this.ausencias = ausencias;
     }
 
-
-
     public List<LicienciaMedica> getLicencias() {
         return licencias;
     }
-
-
 
     public void setLicencias(List<LicienciaMedica> licencias) {
         this.licencias = licencias;
     }
 
-
-
     public DiasAdm getDiasAdm() {
         return diasAdm;
     }
 
-
-
     public void setDiasAdm(DiasAdm diasAdm) {
         this.diasAdm = diasAdm;
     }
-
-    
-    
-
-   
-    
-
-
-
 }

@@ -12,7 +12,7 @@ public class Contratos {
     private String nombrecontrato;
     private Integer grado;
 
-    public Contratos(){
+    public Contratos() {
     }
 
     public Date getFechainicio() {
@@ -26,7 +26,7 @@ public class Contratos {
     public Date getFechatermino() {
         return fechatermino;
     }
-    
+
     public void setFechatermino(Date fechatermino) {
         this.fechatermino = fechatermino;
     }
@@ -70,6 +70,4 @@ public class Contratos {
     public void setGrado(Integer grado) {
         this.grado = grado;
     }
-
-    
 }

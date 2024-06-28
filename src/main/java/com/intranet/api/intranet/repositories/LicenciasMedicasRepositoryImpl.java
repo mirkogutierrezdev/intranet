@@ -61,9 +61,6 @@ public class LicenciasMedicasRepositoryImpl implements ILicenciasMedicasReposito
 
         lm.setDetalleLM(detalleLic(lm));
 
-
-
-
         return lm;
     }
 

@@ -68,10 +68,4 @@ public class Feriados {
     public void setBaseCalculo(Integer baseCalculo) {
         this.baseCalculo = baseCalculo;
     }
-
-
-    
-
-
-
 }

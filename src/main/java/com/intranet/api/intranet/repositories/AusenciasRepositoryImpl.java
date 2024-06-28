@@ -53,5 +53,4 @@ public class AusenciasRepositoryImpl implements IAusenciasRespository {
                         - ausencias.getDias_feriados());
         return ausencias;
     }
-
 }

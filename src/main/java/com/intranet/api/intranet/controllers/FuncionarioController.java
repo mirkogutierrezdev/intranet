@@ -20,13 +20,9 @@ public class FuncionarioController {
 
     @Autowired
     IFuncionariosService service;
-
-  
     
     @GetMapping("/buscar/{rut}")
     public Funcionario showFuncionario(@PathVariable Integer rut){
         return service.findByRut(rut);
     }
-
-  
 }

@@ -37,5 +37,4 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
         depto.setCargo_jefe(rs.getString("CARGO_JEFE"));
         return depto;
     }
-
 }

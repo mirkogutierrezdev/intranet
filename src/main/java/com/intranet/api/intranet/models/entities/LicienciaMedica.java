@@ -21,7 +21,6 @@ public class LicienciaMedica {
 
     public LicienciaMedica(){
 
-
     }
 
     public Long getNumlic() {
@@ -111,12 +110,4 @@ public class LicienciaMedica {
     public void setDetalleLM(DetalleLM detalleLM) {
         this.detalleLM = detalleLM;
     }
-
-    
-
- 
-
-    
-
-
 }

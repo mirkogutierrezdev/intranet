@@ -20,8 +20,6 @@ public class DetalleLM {
 
     }
 
-    
-
     public Date getFechaInicio() {
         return fechaInicio;
     }
@@ -102,19 +100,11 @@ public class DetalleLM {
         this.subSalud = subSalud;
     }
 
-
-
     public Long getNumlic() {
         return numlic;
     }
 
-
-
     public void setNumlic(Long numlic) {
         this.numlic = numlic;
     }
-
-    
-
-    
 }

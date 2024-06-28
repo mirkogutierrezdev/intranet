@@ -51,7 +51,4 @@ public class Departamentos {
     public void setCargo_jefe(String cargo_jefe) {
         this.cargo_jefe = cargo_jefe;
     }
-
-    
-
 }

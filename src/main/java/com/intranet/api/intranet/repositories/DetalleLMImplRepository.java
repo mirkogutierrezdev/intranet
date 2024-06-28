@@ -31,7 +31,6 @@ public class DetalleLMImplRepository implements IDetalleLMRepository {
         } catch (EmptyResultDataAccessException e) {
             return null; // Return null if no result is found
         }
-
     }
 
     private DetalleLM mapRowToDetalleLM(ResultSet rs) throws SQLException {
@@ -49,9 +48,7 @@ public class DetalleLMImplRepository implements IDetalleLMRepository {
         lmDetalle.setSubImposiciones(rs.getLong("subimposiciones"));
         lmDetalle.setSubSalud(rs.getLong("subsalud"));
         lmDetalle.setNumlic(rs.getLong("numlic"));
-
         
         return lmDetalle;
     }
-
 }

@@ -82,14 +82,6 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
 
         funcionario.setDiasAdm(diasAdm);
 
-
-
-       
-
-
-
         return funcionario;
     }
-
-   
 }
