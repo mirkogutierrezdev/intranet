@@ -6,6 +6,7 @@ import java.sql.Date;
 public class Persona {
 
     private Integer rut;
+    private String vrut;
     private String nombres;
     private String apellidopaterno;
     private String apellidomaterno;
@@ -47,6 +48,14 @@ public class Persona {
     public void setRut(Integer rut){
         this.rut = rut;
     }
+    public String getVrut() {
+        return vrut;
+    }
+    public void setVrut(String vrut) {
+        this.vrut = vrut;
+    }
+
+    
 
     
 

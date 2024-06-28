@@ -28,17 +28,27 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
 
     @Override
     public Funcionario findByRut(Integer rut) {
-        String sql = "SELECT personas.rut, APELLIDOPATERNO, APELLIDOMATERNO, nombres, FECHA_NACIMIENTO, ident, " +
-                     "(SELECT DENOMINACION FROM DOMINIOS WHERE COD_DOMINIO = 1 AND COD_SISTEMA = 're') AS area " +
-                     "FROM personas " +
-                     "INNER JOIN REFUNCIONARIOS ON personas.rut = REFUNCIONARIOS.rut " +
-                     "WHERE personas.rut = :rut AND ident = 1";
+        String sql = "SELECT " +
+                     "    personas.rut, " +
+                     "    APELLIDOPATERNO, " +
+                     "    APELLIDOMATERNO, " +
+                     "    nombres, " +
+                     "    FECHA_NACIMIENTO, " +
+                     "    ident, " +
+                     "    (SELECT DENOMINACION FROM DOMINIOS WHERE COD_DOMINIO = 1 AND COD_SISTEMA = 're') AS area, " +
+                     "    (SELECT vrut FROM CONTRIBUYENTES z WHERE z.RUT = personas.rut) AS vrut " +
+                     "FROM " +
+                     "    personas " +
+                     "    INNER JOIN REFUNCIONARIOS ON personas.rut = REFUNCIONARIOS.rut " +
+                     "WHERE " +
+                     "    personas.rut = :rut AND " +
+                     "    ident = 1";
     
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
     
         List<Funcionario> funcionarios = namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToFuncionario(rs));
-        
+    
         return funcionarios.isEmpty() ? null : funcionarios.get(0);
     }
 
@@ -51,6 +61,7 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         funcionario.setApellidomaterno(rs.getString("APELLIDOMATERNO"));
         funcionario.setFecha_nac(rs.getDate("FECHA_NACIMIENTO"));
         funcionario.setArea(rs.getString("area"));
+        funcionario.setVrut(rs.getString("vrut"));
         return funcionario;
     }
 }
