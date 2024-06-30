@@ -4,17 +4,15 @@ import java.util.List;
 
 public class Funcionario extends Persona {
 
-
     private String area;
-    private Departamentos departamento; 
+    private Departamentos departamento;
     private Contratos contrato;
     private List<Ausencias> ausencias;
     private List<Feriados> feriados;
     private List<LicienciaMedica> licencias;
     private DiasAdm diasAdm;
 
-
-    public Funcionario(){
+    public Funcionario() {
         super();
     }
 

@@ -16,7 +16,7 @@ public class DetalleLM {
     private Long subSalud;
     private Long numlic;
 
-    public DetalleLM(){
+    public DetalleLM() {
 
     }
 

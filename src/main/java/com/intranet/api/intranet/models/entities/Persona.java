@@ -2,7 +2,6 @@ package com.intranet.api.intranet.models.entities;
 
 import java.sql.Date;
 
-
 public class Persona {
 
     private Integer rut;
@@ -11,7 +10,7 @@ public class Persona {
     private String apellidopaterno;
     private String apellidomaterno;
     private Date fecha_nac;
-    
+
     public Persona() {
     }
 
@@ -47,13 +46,14 @@ public class Persona {
         this.fecha_nac = date;
     }
 
-    public Integer getRut(){
+    public Integer getRut() {
         return rut;
     }
 
-    public void setRut(Integer rut){
+    public void setRut(Integer rut) {
         this.rut = rut;
     }
+
     public String getVrut() {
         return vrut;
     }

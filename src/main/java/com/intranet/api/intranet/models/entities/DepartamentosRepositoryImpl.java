@@ -2,12 +2,10 @@ package com.intranet.api.intranet.models.entities;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-
 import com.intranet.api.intranet.repositories.IDepartamentosRepository;
 
 public class DepartamentosRepositoryImpl implements IDepartamentosRepository {

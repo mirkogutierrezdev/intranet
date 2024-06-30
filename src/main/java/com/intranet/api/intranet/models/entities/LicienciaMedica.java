@@ -2,7 +2,6 @@ package com.intranet.api.intranet.models.entities;
 
 import java.sql.Date;
 
-
 public class LicienciaMedica {
 
     private Long numlic;
@@ -15,11 +14,9 @@ public class LicienciaMedica {
     private String rutMedico;
     private String nombreProfesional;
     private String tipoLicencia;
-    
     private DetalleLM detalleLM;
 
-
-    public LicienciaMedica(){
+    public LicienciaMedica() {
 
     }
 

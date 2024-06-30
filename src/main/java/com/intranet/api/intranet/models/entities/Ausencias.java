@@ -96,5 +96,4 @@ public class Ausencias {
     public void setDias_feriados(Integer dias_feriados) {
         this.dias_feriados = dias_feriados;
     }
-
 }
