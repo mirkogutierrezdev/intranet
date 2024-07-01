@@ -19,7 +19,7 @@ public class FeriadosRepositoryImpl implements IFeriadosRepository {
     @Override
     public List<Feriados> buscaFeriados(Integer rut) {
         int currentYear = LocalDate.now().getYear();
-        int currentMonth = LocalDate.now().getMonthValue();
+        int currentMonth = LocalDate.now().getMonthValue() -1;
 
         String sql = "exec ppefuncdiasferiados 1, :rut, :rut, :currentYear, :currentMonth";
 

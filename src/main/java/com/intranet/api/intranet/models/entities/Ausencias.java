@@ -13,6 +13,7 @@ public class Ausencias {
     private Long dias_ausencia;
     private Integer dias_feriados;
 
+
     public Ausencias() {
     }
 

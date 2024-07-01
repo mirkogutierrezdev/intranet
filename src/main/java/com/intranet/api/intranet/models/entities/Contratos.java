@@ -11,6 +11,7 @@ public class Contratos {
     private String escalafon;
     private String nombrecontrato;
     private Integer grado;
+    private Integer isJefe;
 
     public Contratos() {
     }
@@ -70,4 +71,14 @@ public class Contratos {
     public void setGrado(Integer grado) {
         this.grado = grado;
     }
+
+    public Integer getIsJefe() {
+        return isJefe;
+    }
+
+    public void setIsJefe(Integer isJefe) {
+        this.isJefe = isJefe;
+    }
+
+    
 }
