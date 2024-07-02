@@ -33,4 +33,13 @@ public class FuncionarioController {
                                  .body("Error al buscar el funcionario: " + e.getMessage());
         }
     }
+
+
+    
+    @GetMapping("/esjefe/{rut}")
+    public ResponseEntity<Boolean> esJefe(@PathVariable Integer rut) {
+        Boolean result = service.isJefe(rut);
+        HttpStatus status = result != null ? HttpStatus.OK : HttpStatus.NOT_FOUND; // Podrías ajustar según tu lógica
+        return ResponseEntity.status(status).body(result);
+    }
 }

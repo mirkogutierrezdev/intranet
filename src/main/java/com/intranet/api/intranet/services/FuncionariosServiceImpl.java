@@ -75,4 +75,9 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
 
         return funcionario;
     }
+
+    public Boolean isJefe(Integer rut){
+
+        return repository.esJefe(rut);
+    }
 }

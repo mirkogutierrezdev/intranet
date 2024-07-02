@@ -6,4 +6,8 @@ public interface IFuncionariossRepository {
 
      Funcionario findByRut(Integer rut);
 
+     Boolean esJefe(Integer rut);
+
+    
+
 }
