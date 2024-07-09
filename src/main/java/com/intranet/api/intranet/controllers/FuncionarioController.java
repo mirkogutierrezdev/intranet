@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.intranet.api.intranet.models.entities.Departamentos;
 import com.intranet.api.intranet.models.entities.Funcionario;
+import com.intranet.api.intranet.services.IDepartamentosService;
 import com.intranet.api.intranet.services.IFuncionariosService;
 
 @RestController
@@ -18,6 +21,9 @@ public class FuncionarioController {
 
     @Autowired
     IFuncionariosService service;
+
+    @Autowired
+    IDepartamentosService departamentosService;
     
     @GetMapping("/buscar/{rut}")
     public ResponseEntity<?> showFuncionario(@PathVariable Integer rut) {
@@ -42,4 +48,10 @@ public class FuncionarioController {
         HttpStatus status = result != null ? HttpStatus.OK : HttpStatus.NOT_FOUND; // Podrías ajustar según tu lógica
         return ResponseEntity.status(status).body(result);
     }
+
+    @GetMapping("/test/{depto}")
+    public Departamentos buscaDepto(@PathVariable String depto){
+        return departamentosService.buscaDepartamento(depto);
+    }
+
 }
