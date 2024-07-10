@@ -15,13 +15,13 @@ import com.intranet.api.intranet.services.IPersonaService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/api")
+@RequestMapping("/api/smc/persona")
 public class PersonaController {
 
     @Autowired
     private IPersonaService personaService;
 
-    @GetMapping("persona/buscar/{rut}")
+    @GetMapping("/buscar/{rut}")
      public ResponseEntity<?> showFuncionario(@PathVariable Integer rut) {
         try {
             Persona persona = personaService.findByRut(rut);

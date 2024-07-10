@@ -16,7 +16,7 @@ import com.intranet.api.intranet.services.IFuncionariosService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/api")
+@RequestMapping("/api/smc/funcionario")
 public class FuncionarioController {
 
     @Autowired
@@ -49,7 +49,7 @@ public class FuncionarioController {
         return ResponseEntity.status(status).body(result);
     }
 
-    @GetMapping("/test/{depto}")
+    @GetMapping("/depto/{depto}")
     public Departamentos buscaDepto(@PathVariable String depto){
         return departamentosService.buscaDepartamento(depto);
     }
