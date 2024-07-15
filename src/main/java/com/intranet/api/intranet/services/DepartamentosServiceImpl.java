@@ -1,5 +1,7 @@
 package com.intranet.api.intranet.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,11 @@ public class DepartamentosServiceImpl implements IDepartamentosService {
     public Departamentos buscaDepartamento(String depto) {
        return departamentosRepository.buscaDepartamento(depto);
     }
+
+    @Override
+    public List<Departamentos> findAll() {
+        return departamentosRepository.findAll();
+    }
+
 
 }

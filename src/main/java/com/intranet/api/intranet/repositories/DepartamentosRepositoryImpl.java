@@ -2,6 +2,8 @@ package com.intranet.api.intranet.repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -39,7 +41,17 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
         return depto;
     }
 
+    @Override
+    public List<Departamentos> findAll() {
 
+        String sql = "SELECT depto, NOMBRE_DEPARTAMENTO, JEFE_DEPARTAMENTO, CARGO_JEFE FROM DEPARTAMENTOS ";
 
-    
+        try {
+            return namedParameterJdbcTemplate.query(sql,  (rs, rowNum) -> mapRowToDepartamento(rs));
+        } catch (EmptyResultDataAccessException e) {
+            return null; // Return null if no result is found
+        }
+
+    }
+
 }

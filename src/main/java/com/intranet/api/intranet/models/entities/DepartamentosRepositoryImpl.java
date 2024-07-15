@@ -2,6 +2,8 @@ package com.intranet.api.intranet.models.entities;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -34,5 +36,10 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
         depto.setJefe_departamento(rs.getString("JEFE_DEPARTAMENTO"));
         depto.setCargo_jefe(rs.getString("CARGO_JEFE"));
         return depto;
+    }
+    @Override
+    public List<Departamentos> findAll() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 }
