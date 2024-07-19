@@ -77,10 +77,10 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
     
         try {
             // Ejecutar la consulta y obtener el resultado como un entero
-            int count = namedParameterJdbcTemplate.queryForObject(sql, params, Integer.class);
+            Integer count = namedParameterJdbcTemplate.queryForObject(sql, params, Integer.class);
             
             // Si count es mayor que 0, la persona es jefe; de lo contrario, no lo es
-            return count > 0;
+            return count !=null && count> 0;
         } catch (EmptyResultDataAccessException e) {
             return false; // Si no hay resultados, la persona no es jefe
         }

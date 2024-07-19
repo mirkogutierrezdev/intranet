@@ -39,7 +39,6 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
     }
     @Override
     public List<Departamentos> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+       return  null;
     }
 }
