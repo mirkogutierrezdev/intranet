@@ -7,4 +7,5 @@ public interface IFuncionariosService {
      Funcionario findByRut(Integer rut);
 
      Boolean isJefe(Integer rut);
+     
 }

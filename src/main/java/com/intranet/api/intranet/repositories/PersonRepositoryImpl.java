@@ -19,9 +19,11 @@ public class PersonRepositoryImpl implements IPersonaRepository{
     @Override
     public Persona findByRut(Integer rut) {
         String sql = "SELECT rut, nombres, apellidopaterno, apellidomaterno, FECHA_NACIMIENTO, " +
-             "(SELECT vrut FROM CONTRIBUYENTES z WHERE z.rut = personas.rut) AS vrut " +
+             "(SELECT vrut FROM CONTRIBUYENTES z WHERE z.rut = personas.rut) AS vrut, " +
+             "(SELECT fono FROM CONTRIBUYENTES x WHERE x.rut = personas.rut) AS telefono " +
              "FROM personas " +
              "WHERE RUT = :rut";
+
 
             
     
@@ -41,6 +43,7 @@ public class PersonRepositoryImpl implements IPersonaRepository{
         persona.setApellidomaterno(rs.getString("apellidomaterno"));
         persona.setFecha_nac(rs.getDate("fecha_nacimiento"));
         persona.setVrut(rs.getString("vrut"));
+        persona.setTelefono(rs.getInt("telefono"));
 
 
         return persona;
