@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Funcionario extends Persona {
 
+    
     private String area;
     private Departamentos departamento;
     private Contratos contrato;

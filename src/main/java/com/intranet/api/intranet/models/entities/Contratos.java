@@ -12,6 +12,9 @@ public class Contratos {
     private String nombrecontrato;
     private Integer grado;
     private Integer isJefe;
+    private Integer ident;
+
+    
 
     public Contratos() {
     }
@@ -78,6 +81,14 @@ public class Contratos {
 
     public void setIsJefe(Integer isJefe) {
         this.isJefe = isJefe;
+    }
+
+    public Integer getIdent() {
+        return ident;
+    }
+
+    public void setIdent(Integer ident) {
+        this.ident = ident;
     }
 
     

@@ -18,10 +18,11 @@ public class DetalleLMImplRepository implements IDetalleLMRepository {
     @Override
     public DetalleLM buscaDetalleLm(Long numLic) {
 
-        String sql = "exec PLMcalculo 1, :numlic";
+        String sql = "exec PLMcalculo :ident, :numlic";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("numlic", numLic);
+
 
         try {
             return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToDetalleLM(rs));

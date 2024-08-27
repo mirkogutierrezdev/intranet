@@ -41,8 +41,8 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
                 "    personas " +
                 "    INNER JOIN REFUNCIONARIOS ON personas.rut = REFUNCIONARIOS.rut " +
                 "WHERE " +
-                "    personas.rut = :rut AND " +
-                "    ident = 1";
+                "    personas.rut = :rut  " ;
+                
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);

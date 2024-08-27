@@ -69,7 +69,7 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
 
         funcionario.setLicencias(licencias);
 
-        DiasAdm diasAdm = diasAdmRespository.consultaSaldo(rut);
+        DiasAdm diasAdm = diasAdmRespository.consultaSaldo(rut, funcionario.getContrato().getIdent());
 
         funcionario.setDiasAdm(diasAdm);
 

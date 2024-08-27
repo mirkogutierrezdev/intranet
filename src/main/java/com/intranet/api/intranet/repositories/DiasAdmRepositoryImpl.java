@@ -17,14 +17,15 @@ public class DiasAdmRepositoryImpl implements IDiasAdmRespository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public DiasAdm consultaSaldo(Integer rut) {
+    public DiasAdm consultaSaldo(Integer rut, Integer ident) {
 
         int currentYear = LocalDate.now().getYear();
-        String sql = "ppediasadmin 1 ,:rut,:rut,:anio";
+        String sql = "ppediasadmin :ident ,:rut,:rut,:anio";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
         params.addValue("anio", currentYear);
+        params.addValue("ident", ident);
 
         try {
             return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToDiasAdm(rs));
