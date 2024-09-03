@@ -16,8 +16,6 @@ public class Contratos {
 
     
 
-    public Contratos() {
-    }
 
     public Date getFechainicio() {
         return fechainicio;
