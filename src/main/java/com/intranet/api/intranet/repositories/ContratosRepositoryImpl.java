@@ -2,7 +2,6 @@ package com.intranet.api.intranet.repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,8 +10,11 @@ import com.intranet.api.intranet.models.entities.Contratos;
 @Repository
 public class ContratosRepositoryImpl implements IContratosRepository {
 
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    public ContratosRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Override
     public Contratos buscaContrato(Integer rut) {

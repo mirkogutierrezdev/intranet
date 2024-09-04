@@ -3,7 +3,6 @@ package com.intranet.api.intranet.controllers;
 import java.sql.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,8 +19,13 @@ import com.intranet.api.intranet.services.IFeriadoService;
 @RequestMapping("/api/smc/feriados")
 public class FeriadoController {
 
-    @Autowired
-    IFeriadoService feriadosService;
+    private final IFeriadoService feriadosService;
+
+    public FeriadoController(IFeriadoService feriadosService) {
+        this.feriadosService = feriadosService;
+    }
+
+
 
     @GetMapping("/calcular")
     public ResponseEntity<List<Feriado>> getFeriados(@RequestParam("fechaInicio") Date fechaInicio,
@@ -30,7 +34,7 @@ public class FeriadoController {
         try {
             
             List<Feriado> diasFeriados = feriadosService.buscaFeriados(fechaInicio, fechaTermino);
-            return new ResponseEntity<List<Feriado>>(diasFeriados, HttpStatus.OK);
+            return new ResponseEntity<>(diasFeriados, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

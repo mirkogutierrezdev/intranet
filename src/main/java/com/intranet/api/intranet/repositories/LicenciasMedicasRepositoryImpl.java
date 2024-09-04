@@ -3,26 +3,31 @@ package com.intranet.api.intranet.repositories;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.intranet.api.intranet.models.entities.DetalleLM;
+import com.intranet.api.intranet.models.entities.Funcionario;
 import com.intranet.api.intranet.models.entities.LicienciaMedica;
 
 @Repository
 public class LicenciasMedicasRepositoryImpl implements ILicenciasMedicasRepository {
 
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @Autowired
-    private IDetalleLMRepository detalleLMRepository;
+    private final IDetalleLMRepository detalleLMRepository;
+
+    public LicenciasMedicasRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+            IDetalleLMRepository detalleLMRepository) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        this.detalleLMRepository = detalleLMRepository;
+    }
 
     @Override
-    public List<LicienciaMedica> buscaLicencias(Integer rut) {
+    public List<LicienciaMedica> buscaLicencias(Funcionario funcionario) {
         String sql = "select  \r\n" +
                 "NUMLIC,\r\n" +
+                "ident,\r\n" +
                 "FECHAINI,\r\n" +
                 "isnull((select NOMBREISAPRE from REISAPRES z where z.CODISAPRE=LMLICENCIAS.CODISAPRE),'Fonasa') as prevision,\r\n"
                 +
@@ -35,11 +40,12 @@ public class LicenciasMedicasRepositoryImpl implements ILicenciasMedicasReposito
                 "RUT_PROFESIONAL,\r\n" +
                 "NOMBRE_PROFESIONAL\r\n" +
                 "from LMLICENCIAS\r\n" +
-                "where ident=1 and rut = :rut and LMLICENCIAS.FECHAINI >=\r\n" +
+                "where ident=:ident and rut = :rut and LMLICENCIAS.FECHAINI >=\r\n" +
                 "(select fechacorteflegal from PEINICIALES z where ident=1 and z.RUT=LMLICENCIAS.RUT)";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("rut", rut);
+        params.addValue("rut", funcionario.getRut());
+        params.addValue("ident", funcionario.getContrato().getIdent());
 
         return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToLicenciasMedicas(rs));
     }
@@ -57,15 +63,17 @@ public class LicenciasMedicasRepositoryImpl implements ILicenciasMedicasReposito
         lm.setFechaRecepcion(rs.getDate("fecharecepcion"));
         lm.setRutMedico(rs.getString("rut_profesional"));
         lm.setNombreProfesional(rs.getString("nombre_profesional"));
-        lm.setDetalleLM(detalleLic(lm));
+        lm.setIdent(rs.getInt("ident"));
+
+        DetalleLM detalleLM = detalleLic(lm);
+
+        lm.setDetalleLM(detalleLM);
 
         return lm;
     }
 
     private DetalleLM detalleLic(LicienciaMedica licienciaMedica) {
 
-        DetalleLM detalle = detalleLMRepository.buscaDetalleLm(licienciaMedica.getNumlic());
-
-        return detalle;
+        return detalleLMRepository.buscaDetalleLm(licienciaMedica);
     }
 }

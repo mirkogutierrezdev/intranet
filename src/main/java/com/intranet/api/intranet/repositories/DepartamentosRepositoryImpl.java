@@ -2,9 +2,9 @@ package com.intranet.api.intranet.repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,8 +14,11 @@ import com.intranet.api.intranet.models.entities.Departamentos;
 @Repository
 public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
 
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    public DepartamentosRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Override
     public Departamentos buscaDepartamento(String depto) {
@@ -47,9 +50,9 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
         String sql = "SELECT depto, NOMBRE_DEPARTAMENTO, JEFE_DEPARTAMENTO, CARGO_JEFE FROM DEPARTAMENTOS ";
 
         try {
-            return namedParameterJdbcTemplate.query(sql,  (rs, rowNum) -> mapRowToDepartamento(rs));
+            return namedParameterJdbcTemplate.query(sql, (rs, rowNum) -> mapRowToDepartamento(rs));
         } catch (EmptyResultDataAccessException e) {
-            return null; // Return null if no result is found
+            return Collections.emptyList(); // Return null if no result is found
         }
 
     }

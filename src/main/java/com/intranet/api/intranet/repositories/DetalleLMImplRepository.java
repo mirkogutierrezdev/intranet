@@ -2,27 +2,30 @@ package com.intranet.api.intranet.repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.intranet.api.intranet.models.entities.DetalleLM;
+import com.intranet.api.intranet.models.entities.LicienciaMedica;
 
 @Repository
 public class DetalleLMImplRepository implements IDetalleLMRepository {
 
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    public DetalleLMImplRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Override
-    public DetalleLM buscaDetalleLm(Long numLic) {
+    public DetalleLM buscaDetalleLm(LicienciaMedica licienciaMedica) {
 
         String sql = "exec PLMcalculo :ident, :numlic";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("numlic", numLic);
-
+        params.addValue("numlic", licienciaMedica.getNumlic());
+        params.addValue("ident", licienciaMedica.getIdent());
 
         try {
             return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToDetalleLM(rs));

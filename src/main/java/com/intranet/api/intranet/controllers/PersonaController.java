@@ -1,6 +1,5 @@
 package com.intranet.api.intranet.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,8 +17,11 @@ import com.intranet.api.intranet.services.IPersonaService;
 @RequestMapping("/api/smc/persona")
 public class PersonaController {
 
-    @Autowired
-    private IPersonaService personaService;
+    private final IPersonaService personaService;
+
+    public PersonaController(IPersonaService personaService) {
+        this.personaService = personaService;
+    }
 
     @GetMapping("/buscar/{rut}")
      public ResponseEntity<?> showFuncionario(@PathVariable Integer rut) {

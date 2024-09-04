@@ -3,27 +3,20 @@ package com.intranet.api.intranet.repositories;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 
 import com.intranet.api.intranet.models.entities.Funcionario;
 
 @Repository
 public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
 
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @SuppressWarnings("unused")
-    private final JdbcTemplate jdbcTemplate;
-
-    public FuncionariosRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public FuncionariosRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
@@ -41,8 +34,7 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
                 "    personas " +
                 "    INNER JOIN REFUNCIONARIOS ON personas.rut = REFUNCIONARIOS.rut " +
                 "WHERE " +
-                "    personas.rut = :rut  " ;
-                
+                "    personas.rut = :rut  ";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
@@ -69,23 +61,21 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
     @Override
     public Boolean esJefe(Integer rut) {
         String sql = "SELECT COUNT(*) FROM DEPARTAMENTOS " +
-                     "INNER JOIN PERSONAS ON DEPARTAMENTOS.RUT = PERSONAS.RUT " +
-                     "WHERE DEPARTAMENTOS.rut = :rut ";
-    
+                "INNER JOIN PERSONAS ON DEPARTAMENTOS.RUT = PERSONAS.RUT " +
+                "WHERE DEPARTAMENTOS.rut = :rut ";
+
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
-    
+
         try {
             // Ejecutar la consulta y obtener el resultado como un entero
             Integer count = namedParameterJdbcTemplate.queryForObject(sql, params, Integer.class);
-            
+
             // Si count es mayor que 0, la persona es jefe; de lo contrario, no lo es
-            return count !=null && count> 0;
+            return count != null && count > 0;
         } catch (EmptyResultDataAccessException e) {
             return false; // Si no hay resultados, la persona no es jefe
         }
     }
 
-
-    
 }

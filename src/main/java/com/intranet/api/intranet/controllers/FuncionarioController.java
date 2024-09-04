@@ -1,6 +1,5 @@
 package com.intranet.api.intranet.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,12 +18,19 @@ import com.intranet.api.intranet.services.IFuncionariosService;
 @RequestMapping("/api/smc/funcionario")
 public class FuncionarioController {
 
-    @Autowired
-    IFuncionariosService service;
+    private final IFuncionariosService service;
 
-    @Autowired
-    IDepartamentosService departamentosService;
+    private final IDepartamentosService departamentosService;
+
     
+    
+    public FuncionarioController(IFuncionariosService service, IDepartamentosService departamentosService) {
+        this.service = service;
+        this.departamentosService = departamentosService;
+    }
+
+
+
     @GetMapping("/buscar/{rut}")
     public ResponseEntity<?> showFuncionario(@PathVariable Integer rut) {
         try {

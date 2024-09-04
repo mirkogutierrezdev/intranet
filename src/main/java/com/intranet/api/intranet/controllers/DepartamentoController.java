@@ -2,7 +2,6 @@ package com.intranet.api.intranet.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,14 @@ import com.intranet.api.intranet.services.IDepartamentosService;
 @RequestMapping("/api/departamentos")
 public class DepartamentoController {
 
-    @Autowired
-    private IDepartamentosService departamentosService;
+    private final IDepartamentosService departamentosService;
+
+
+    public DepartamentoController(IDepartamentosService departamentosService) {
+        this.departamentosService = departamentosService;
+    }
+
+
 
     @GetMapping("/list")
     public List<Departamentos> findAll(){

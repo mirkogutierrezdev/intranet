@@ -1,7 +1,6 @@
 package com.intranet.api.intranet.services;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.intranet.api.intranet.models.entities.Ausencias;
@@ -22,26 +21,32 @@ import com.intranet.api.intranet.repositories.ILicenciasMedicasRepository;
 @Service
 public class FuncionariosServiceImpl implements IFuncionariosService {
 
-    @Autowired
-    public IFuncionariossRepository repository;
+    private final IFuncionariossRepository repository;
 
-    @Autowired
-    private IAusenciasRespository ausenciasRespository;
+    private final IAusenciasRespository ausenciasRespository;
 
-    @Autowired
-    private IContratosRepository contratosRepository;
+    private final IContratosRepository contratosRepository;
 
-    @Autowired
-    private IDepartamentosRepository departamentosRepository;
+    private final IDepartamentosRepository departamentosRepository;
 
-    @Autowired
-    private IFeriadosRepository feriadosRepository;
+    private final IFeriadosRepository feriadosRepository;
 
-    @Autowired
-    private ILicenciasMedicasRepository licenciasMedicasRepository;
+    private final ILicenciasMedicasRepository licenciasMedicasRepository;
 
-    @Autowired
-    private IDiasAdmRespository diasAdmRespository;
+    private final IDiasAdmRespository diasAdmRespository;
+
+    public FuncionariosServiceImpl(IFuncionariossRepository repository, IAusenciasRespository ausenciasRespository,
+            IContratosRepository contratosRepository, IDepartamentosRepository departamentosRepository,
+            IFeriadosRepository feriadosRepository, ILicenciasMedicasRepository licenciasMedicasRepository,
+            IDiasAdmRespository diasAdmRespository) {
+        this.repository = repository;
+        this.ausenciasRespository = ausenciasRespository;
+        this.contratosRepository = contratosRepository;
+        this.departamentosRepository = departamentosRepository;
+        this.feriadosRepository = feriadosRepository;
+        this.licenciasMedicasRepository = licenciasMedicasRepository;
+        this.diasAdmRespository = diasAdmRespository;
+    }
 
     @Override
     @Transactional
@@ -65,7 +70,7 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
 
         funcionario.setFeriados(feriados);
 
-        List<LicienciaMedica> licencias = licenciasMedicasRepository.buscaLicencias(rut);
+        List<LicienciaMedica> licencias = licenciasMedicasRepository.buscaLicencias(funcionario);
 
         funcionario.setLicencias(licencias);
 
@@ -76,7 +81,7 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
         return funcionario;
     }
 
-    public Boolean isJefe(Integer rut){
+    public Boolean isJefe(Integer rut) {
 
         return repository.esJefe(rut);
     }

@@ -3,7 +3,7 @@ package com.intranet.api.intranet.repositories;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,8 +13,11 @@ import com.intranet.api.intranet.models.entities.Ausencias;
 @Repository
 public class AusenciasRepositoryImpl implements IAusenciasRespository {
 
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    public AusenciasRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Override
     public List<Ausencias> buscaAusencias(Integer rut) {
@@ -43,13 +46,13 @@ public class AusenciasRepositoryImpl implements IAusenciasRespository {
         ausencias.setIdent(rs.getInt("ident"));
         ausencias.setDescripcion(rs.getString("DESCTIPOAUSENCIA"));
 
-        ausencias.setFecha_inicio(rs.getDate("FECHAINICIO"));
-        ausencias.setFecha_termino(rs.getDate("FECHATERMINO"));
-        ausencias.setDias_feriados(rs.getInt("feriados_mes"));
+        ausencias.setFechaInicio(rs.getDate("FECHAINICIO"));
+        ausencias.setFechaTermino(rs.getDate("FECHATERMINO"));
+        ausencias.setDiasFeriados(rs.getInt("feriados_mes"));
 
-        ausencias.setDias_ausencia(
-                ausencias.calcularDiasHabiles(ausencias.getFecha_inicio(), ausencias.getFecha_termino())
-                        - ausencias.getDias_feriados());
+        ausencias.setDiasAusencia(
+                ausencias.calcularDiasHabiles(ausencias.getFechaInicio(), ausencias.getFechaTermino())
+                        - ausencias.getDiasFeriados());
         return ausencias;
     }
 }

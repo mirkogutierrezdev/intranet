@@ -1,6 +1,5 @@
 package com.intranet.api.intranet.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,8 +9,13 @@ import com.intranet.api.intranet.repositories.IPersonaRepository;
 @Service
 public class PersonaServiceImpl implements IPersonaService {
 
-    @Autowired
-    private IPersonaRepository personaRepository;
+    private final IPersonaRepository personaRepository;
+
+
+    public PersonaServiceImpl(IPersonaRepository personaRepository) {
+        this.personaRepository = personaRepository;
+    }
+
 
     @Override
     @Transactional

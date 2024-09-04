@@ -1,12 +1,10 @@
 package com.intranet.api.intranet.repositories;
 
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,8 +14,11 @@ import com.intranet.api.intranet.models.entities.Feriados;
 @Repository
 public class FeriadosRepositoryImpl implements IFeriadosRepository {
 
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    public FeriadosRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Override
     public List<Feriados> buscaFeriados(Integer rut) {
@@ -47,9 +48,5 @@ public class FeriadosRepositoryImpl implements IFeriadosRepository {
 
         return feriados;
     }
-
-
-
-    
 
 }

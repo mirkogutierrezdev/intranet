@@ -8,21 +8,22 @@ public class Ausencias {
 
     private Integer ident;
     private String descripcion;
-    private Date fecha_inicio;
-    private Date fecha_termino;
-    private Long dias_ausencia;
-    private Integer dias_feriados;
+    private Date fechaInicio;
+    private Date fechaTermino;
+    private Long diasAusencia;
+    private Integer diasFeriados;
 
 
     public Ausencias() {
     }
 
-    public Ausencias(Integer ident, String descripcion, Date fecha_inicio, Date fecha_termino, Integer dias_feriados) {
+    public Ausencias(Integer ident, String descripcion, Date fechaInicio, Date fechaTermino,Long diasAusencia, Integer diasFeriados) {
         this.ident = ident;
         this.descripcion = descripcion;
-        this.fecha_inicio = fecha_inicio;
-        this.fecha_termino = fecha_termino;
-        this.dias_feriados = dias_feriados;
+        this.fechaInicio = fechaInicio;
+        this.fechaTermino = fechaTermino;
+        this.diasFeriados = diasFeriados;
+        this.diasAusencia = diasAusencia;
     }
 
     public Integer getIdent() {
@@ -41,28 +42,28 @@ public class Ausencias {
         this.descripcion = descripcion;
     }
 
-    public Date getFecha_inicio() {
-        return fecha_inicio;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setFecha_inicio(Date fecha_inicio) {
-        this.fecha_inicio = fecha_inicio;
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
-    public Date getFecha_termino() {
-        return fecha_termino;
+    public Date getFechaTermino() {
+        return fechaTermino;
     }
 
-    public void setFecha_termino(Date fecha_termino) {
-        this.fecha_termino = fecha_termino;
+    public void setFechaTermino(Date fechaTermino) {
+        this.fechaTermino = fechaTermino;
     }
 
-    public Long getDias_ausencia() {
-        return dias_ausencia;
+    public Long getDiasAusencia() {
+        return diasAusencia;
     }
 
-    public void setDias_ausencia(Long dias_ausencia) {
-        this.dias_ausencia = dias_ausencia;
+    public void setDiasAusencia(Long diasAusencia) {
+        this.diasAusencia = diasAusencia;
     }
 
     //Metodo que calcula la cantidad de dias de trabajo , descontando sa
@@ -90,11 +91,11 @@ public class Ausencias {
         return workingDays;
     }
 
-    public Integer getDias_feriados() {
-        return dias_feriados;
+    public Integer getDiasFeriados() {
+        return diasFeriados;
     }
 
-    public void setDias_feriados(Integer dias_feriados) {
-        this.dias_feriados = dias_feriados;
+    public void setDiasFeriados(Integer diasFeriados) {
+        this.diasFeriados = diasFeriados;
     }
 }

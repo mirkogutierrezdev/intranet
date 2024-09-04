@@ -14,11 +14,11 @@ public class LicienciaMedica {
     private String rutMedico;
     private String nombreProfesional;
     private String tipoLicencia;
+    private Integer ident;
+
     private DetalleLM detalleLM;
 
-    public LicienciaMedica() {
 
-    }
 
     public Long getNumlic() {
         return numlic;
@@ -106,5 +106,13 @@ public class LicienciaMedica {
 
     public void setDetalleLM(DetalleLM detalleLM) {
         this.detalleLM = detalleLM;
+    }
+
+    public Integer getIdent() {
+        return ident;
+    }
+
+    public void setIdent(Integer ident) {
+        this.ident = ident;
     }
 }
