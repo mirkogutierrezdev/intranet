@@ -3,20 +3,20 @@ package com.intranet.api.intranet.models.entities;
 public class Departamentos {
 
     private String depto;
-    private String nombre_departamento;
-    private String jefe_departamento;
-    private String cargo_jefe;
+    private String nombreDepartamento;
+    private String jefeDepartamento;
+    private String cargoJefe;
 
     public Departamentos() {
 
     }
 
-    public Departamentos(String depto, String nombre_departamentos, String jefe_departamentos,
-            String cargo_jefe) {
+    public Departamentos(String depto, String nombreDepartamento, String jefeDepartamento,
+            String cargoJefe) {
         this.depto = depto;
-        this.nombre_departamento = nombre_departamentos;
-        this.jefe_departamento = jefe_departamentos;
-        this.cargo_jefe = cargo_jefe;
+        this.nombreDepartamento = nombreDepartamento;
+        this.jefeDepartamento = jefeDepartamento;
+        this.cargoJefe = cargoJefe;
 
     }
 
@@ -28,27 +28,27 @@ public class Departamentos {
         this.depto = depto;
     }
 
-    public String getNombre_departamento() {
-        return nombre_departamento;
+    public String getNombreDepartamento() {
+        return nombreDepartamento;
     }
 
-    public void setNombre_departamento(String nombre_departamentos) {
-        this.nombre_departamento = nombre_departamentos;
+    public void setNombreDepartamento(String nombreDepartamento) {
+        this.nombreDepartamento = nombreDepartamento;
     }
 
-    public String getJefe_departamento() {
-        return jefe_departamento;
+    public String getJefeDepartamento() {
+        return jefeDepartamento;
     }
 
-    public void setJefe_departamento(String jefe_departamentos) {
-        this.jefe_departamento = jefe_departamentos;
+    public void setJefeDepartamento(String jefeDepartamento) {
+        this.jefeDepartamento = jefeDepartamento;
     }
 
-    public String getCargo_jefe() {
-        return cargo_jefe;
+    public String getCargoJefe() {
+        return cargoJefe;
     }
 
-    public void setCargo_jefe(String cargo_jefe) {
-        this.cargo_jefe = cargo_jefe;
+    public void setCargoJefe(String cargoJefe) {
+        this.cargoJefe = cargoJefe;
     }
 }

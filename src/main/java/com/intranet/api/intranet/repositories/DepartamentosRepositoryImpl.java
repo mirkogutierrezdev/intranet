@@ -38,9 +38,9 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
     private Departamentos mapRowToDepartamento(ResultSet rs) throws SQLException {
         Departamentos depto = new Departamentos();
         depto.setDepto(rs.getString("depto"));
-        depto.setNombre_departamento(rs.getString("NOMBRE_DEPARTAMENTO"));
-        depto.setJefe_departamento(rs.getString("JEFE_DEPARTAMENTO"));
-        depto.setCargo_jefe(rs.getString("CARGO_JEFE"));
+        depto.setNombreDepartamento(rs.getString("NOMBRE_DEPARTAMENTO"));
+        depto.setJefeDepartamento(rs.getString("JEFE_DEPARTAMENTO"));
+        depto.setCargoJefe(rs.getString("CARGO_JEFE"));
         return depto;
     }
 
