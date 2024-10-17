@@ -22,7 +22,7 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
 
     @Override
     public Departamentos buscaDepartamento(String depto) {
-        String sql = "SELECT depto, NOMBRE_DEPARTAMENTO, JEFE_DEPARTAMENTO, CARGO_JEFE FROM DEPARTAMENTOS " +
+        String sql = "SELECT depto, NOMBRE_DEPARTAMENTO, JEFE_DEPARTAMENTO, CARGO_JEFE, RUT FROM DEPARTAMENTOS " +
                 "WHERE depto = :depto";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
@@ -41,13 +41,14 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
         depto.setNombreDepartamento(rs.getString("NOMBRE_DEPARTAMENTO"));
         depto.setJefeDepartamento(rs.getString("JEFE_DEPARTAMENTO"));
         depto.setCargoJefe(rs.getString("CARGO_JEFE"));
+        depto.setRutJefe(rs.getString("rut"));
         return depto;
     }
 
     @Override
     public List<Departamentos> findAll() {
 
-        String sql = "SELECT depto, NOMBRE_DEPARTAMENTO, JEFE_DEPARTAMENTO, CARGO_JEFE FROM DEPARTAMENTOS ";
+        String sql = "SELECT depto, NOMBRE_DEPARTAMENTO, JEFE_DEPARTAMENTO, CARGO_JEFE,RUT FROM DEPARTAMENTOS ";
 
         try {
             return namedParameterJdbcTemplate.query(sql, (rs, rowNum) -> mapRowToDepartamento(rs));

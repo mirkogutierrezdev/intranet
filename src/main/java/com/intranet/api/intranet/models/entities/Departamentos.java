@@ -6,17 +6,19 @@ public class Departamentos {
     private String nombreDepartamento;
     private String jefeDepartamento;
     private String cargoJefe;
+    private String rutJefe;
 
     public Departamentos() {
 
     }
 
     public Departamentos(String depto, String nombreDepartamento, String jefeDepartamento,
-            String cargoJefe) {
+            String cargoJefe, String rutJefe) {
         this.depto = depto;
         this.nombreDepartamento = nombreDepartamento;
         this.jefeDepartamento = jefeDepartamento;
         this.cargoJefe = cargoJefe;
+        this.rutJefe = rutJefe;
 
     }
 
@@ -50,5 +52,13 @@ public class Departamentos {
 
     public void setCargoJefe(String cargoJefe) {
         this.cargoJefe = cargoJefe;
+    }
+
+    public String getRutJefe(){
+        return rutJefe;
+    }
+
+    public void setRutJefe(String rutJefe){
+        this.rutJefe = rutJefe;
     }
 }
