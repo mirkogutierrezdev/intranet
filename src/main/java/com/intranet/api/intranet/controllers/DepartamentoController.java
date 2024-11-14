@@ -11,7 +11,7 @@ import com.intranet.api.intranet.models.entities.Departamentos;
 import com.intranet.api.intranet.services.IDepartamentosService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost")
 @RequestMapping("/api/departamentos")
 public class DepartamentoController {
 

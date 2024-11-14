@@ -15,7 +15,7 @@ import com.intranet.api.intranet.models.entities.Feriado;
 import com.intranet.api.intranet.services.IFeriadoService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost")
 @RequestMapping("/api/smc/feriados")
 public class FeriadoController {
 

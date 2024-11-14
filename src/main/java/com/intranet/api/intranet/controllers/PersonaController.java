@@ -13,7 +13,7 @@ import com.intranet.api.intranet.models.entities.Persona;
 import com.intranet.api.intranet.services.IPersonaService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost")
 @RequestMapping("/api/smc/persona")
 public class PersonaController {
 

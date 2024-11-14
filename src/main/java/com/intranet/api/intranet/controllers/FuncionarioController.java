@@ -14,7 +14,7 @@ import com.intranet.api.intranet.services.IDepartamentosService;
 import com.intranet.api.intranet.services.IFuncionariosService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost")
 @RequestMapping("/api/smc/funcionario")
 public class FuncionarioController {
 

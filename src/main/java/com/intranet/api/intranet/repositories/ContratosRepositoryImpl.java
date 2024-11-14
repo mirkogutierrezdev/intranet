@@ -56,12 +56,7 @@ public class ContratosRepositoryImpl implements IContratosRepository {
                 "   AND contratomes.LINCONTRATO = escala.LINCONTRATO " +
                 "WHERE contratomes.ANOREMUN = YEAR(GETDATE()) " +
                 "  AND contratomes.MESREMUN = MONTH(DATEADD(month, -1, GETDATE())) " +
-                "  AND contratomes.LINCONTRATO = (SELECT MAX(x.LINCONTRATO) " +
-                "                                 FROM recontratomes x " +
-                "                                 WHERE contratomes.IDENT = x.IDENT " +
-                "                                   AND contratomes.rut = x.rut " +
-                "                                   AND contratomes.ANOREMUN = x.ANOREMUN " +
-                "                                   AND contratomes.MESREMUN = x.MESREMUN) " +
+               
                 "  AND contratos.FECHAINI <= CONVERT(date, GETDATE(), 104) " +
                 "  AND (contratos.fechafin IS NULL OR contratos.fechafin >= CONVERT(date, GETDATE(), 104)) " +
                 "  AND contratos.RUT = :rut;";
