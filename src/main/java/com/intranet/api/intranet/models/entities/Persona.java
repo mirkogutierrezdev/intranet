@@ -11,6 +11,7 @@ public class Persona {
     private String apellidomaterno;
     private Date fecha_nac;
     private Integer telefono;
+    private String email;
 
     public Persona() {
     }
@@ -69,5 +70,15 @@ public class Persona {
 
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }   
+
+    
 }
