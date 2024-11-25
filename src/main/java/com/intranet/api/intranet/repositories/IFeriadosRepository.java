@@ -8,7 +8,7 @@ import com.intranet.api.intranet.models.entities.Feriados;
 
 public interface IFeriadosRepository {
 
-    List<Feriados> buscaFeriados(Integer rut);
+    List<Feriados> buscaFeriados(Integer rut, Integer ident);
 
 
 }

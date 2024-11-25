@@ -21,13 +21,14 @@ public class FeriadosRepositoryImpl implements IFeriadosRepository {
     }
 
     @Override
-    public List<Feriados> buscaFeriados(Integer rut) {
+    public List<Feriados> buscaFeriados(Integer rut, Integer ident) {
         int currentYear = LocalDate.now().getYear();
         int currentMonth = LocalDate.now().getMonthValue() - 1;
 
-        String sql = "exec ppefuncdiasferiados 1, :rut, :rut, :currentYear, :currentMonth";
+        String sql = "exec ppefuncdiasferiados :ident, :rut, :rut, :currentYear, :currentMonth";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("ident", ident);
         params.addValue("rut", rut);
         params.addValue("currentYear", currentYear);
         params.addValue("currentMonth", currentMonth);

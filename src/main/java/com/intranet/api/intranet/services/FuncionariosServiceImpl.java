@@ -66,7 +66,7 @@ public class FuncionariosServiceImpl implements IFuncionariosService {
 
         funcionario.setAusencias(ausencias);
 
-        List<Feriados> feriados = feriadosRepository.buscaFeriados(rut);
+        List<Feriados> feriados = feriadosRepository.buscaFeriados(rut, funcionario.getIdent());
 
         funcionario.setFeriados(feriados);
 

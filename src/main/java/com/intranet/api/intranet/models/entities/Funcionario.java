@@ -12,6 +12,9 @@ public class Funcionario extends Persona {
     private List<Feriados> feriados;
     private List<LicienciaMedica> licencias;
     private DiasAdm diasAdm;
+    private Integer ident;
+
+    
 
     public Funcionario() {
         super();
@@ -71,5 +74,13 @@ public class Funcionario extends Persona {
 
     public void setDiasAdm(DiasAdm diasAdm) {
         this.diasAdm = diasAdm;
+    }
+
+    public Integer getIdent() {
+        return ident;
+    }
+
+    public void setIdent(Integer ident) {
+        this.ident = ident;
     }
 }

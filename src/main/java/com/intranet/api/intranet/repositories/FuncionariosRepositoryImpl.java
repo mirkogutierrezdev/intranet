@@ -22,19 +22,27 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
     @Override
     public Funcionario findByRut(Integer rut) {
         String sql = "SELECT " +
-                "    personas.rut, " +
-                "    APELLIDOPATERNO, " +
-                "    APELLIDOMATERNO, " +
-                "    nombres, " +
-                "    FECHA_NACIMIENTO, " +
-                "    ident, " +
-                "    (SELECT DENOMINACION FROM DOMINIOS WHERE COD_DOMINIO = 1 AND COD_SISTEMA = 're') AS area, " +
-                "    (SELECT vrut FROM CONTRIBUYENTES z WHERE z.RUT = personas.rut) AS vrut " +
-                "FROM " +
-                "    personas " +
-                "    INNER JOIN REFUNCIONARIOS ON personas.rut = REFUNCIONARIOS.rut " +
-                "WHERE " +
-                "    personas.rut = :rut  ";
+                "  personas.rut, " +
+                "  APELLIDOPATERNO, " +
+                "  APELLIDOMATERNO, " +
+                "  nombres, " +
+                "  FECHA_NACIMIENTO, " +
+                "  REFUNCIONARIOS.ident, " +
+                "  (SELECT DENOMINACION " +
+                "   FROM DOMINIOS " +
+                "   WHERE COD_DOMINIO = 1 AND COD_SISTEMA = 're') AS area, " +
+                "  (SELECT vrut " +
+                "   FROM CONTRIBUYENTES z " +
+                "   WHERE z.RUT = personas.rut) AS vrut " +
+                "FROM personas " +
+                "INNER JOIN REFUNCIONARIOS " +
+                "  ON personas.rut = REFUNCIONARIOS.rut " +
+                "INNER JOIN RECONTRATOS AS contratos " +
+                "  ON REFUNCIONARIOS.IDENT = contratos.IDENT " +
+                "  AND contratos.rut = REFUNCIONARIOS.rut " +
+                "WHERE contratos.FECHAINI <= CONVERT(date, GETDATE(), 104) " +
+                "  AND (contratos.fechafin IS NULL OR contratos.fechafin >= CONVERT(date, GETDATE(), 104)) " +
+                "  AND personas.rut = :rut";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
@@ -55,6 +63,7 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         funcionario.setFecha_nac(rs.getDate("FECHA_NACIMIENTO"));
         funcionario.setArea(rs.getString("area"));
         funcionario.setVrut(rs.getString("vrut"));
+        funcionario.setIdent(rs.getInt("ident"));
         return funcionario;
     }
 
