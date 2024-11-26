@@ -28,7 +28,7 @@ public class DetalleLMImplRepository implements IDetalleLMRepository {
         params.addValue("ident", licienciaMedica.getIdent());
 
         try {
-            return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToDetalleLM(rs));
+            return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, _) -> mapRowToDetalleLM(rs));
         } catch (EmptyResultDataAccessException e) {
             return null; // Return null if no result is found
         }

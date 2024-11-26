@@ -24,7 +24,7 @@ public class PersonaController {
     }
 
     @GetMapping("/buscar/{rut}")
-     public ResponseEntity<?> showFuncionario(@PathVariable Integer rut) {
+     public ResponseEntity<Object> showFuncionario(@PathVariable Integer rut) {
         try {
             Persona persona = personaService.findByRut(rut);
             if (persona == null) {

@@ -31,7 +31,7 @@ public class DiasAdmRepositoryImpl implements IDiasAdmRespository {
         params.addValue("ident", ident);
 
         try {
-            return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToDiasAdm(rs));
+            return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, _) -> mapRowToDiasAdm(rs));
         } catch (EmptyResultDataAccessException e) {
             return null; // Return null if no result is found
         }

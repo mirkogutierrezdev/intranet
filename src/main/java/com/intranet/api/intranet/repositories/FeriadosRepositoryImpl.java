@@ -33,7 +33,7 @@ public class FeriadosRepositoryImpl implements IFeriadosRepository {
         params.addValue("currentYear", currentYear);
         params.addValue("currentMonth", currentMonth);
 
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowFeriados(rs));
+        return namedParameterJdbcTemplate.query(sql, params, (rs, _) -> mapRowFeriados(rs));
     }
 
     private Feriados mapRowFeriados(ResultSet rs) throws SQLException {

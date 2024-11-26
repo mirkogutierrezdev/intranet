@@ -47,7 +47,7 @@ public class LicenciasMedicasRepositoryImpl implements ILicenciasMedicasReposito
         params.addValue("rut", funcionario.getRut());
         params.addValue("ident", funcionario.getContrato().getIdent());
 
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToLicenciasMedicas(rs));
+        return namedParameterJdbcTemplate.query(sql, params, (rs, _) -> mapRowToLicenciasMedicas(rs));
     }
 
     private LicienciaMedica mapRowToLicenciasMedicas(ResultSet rs) throws SQLException {

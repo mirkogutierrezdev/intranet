@@ -4,14 +4,14 @@ import java.sql.Date;
 
 public class Feriado {
 
-    private Date feriado;
+    private Date fecha;
 
-    public Date getFeriado() {
-        return feriado;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFeriado(Date feriado) {
-        this.feriado = feriado;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
 }

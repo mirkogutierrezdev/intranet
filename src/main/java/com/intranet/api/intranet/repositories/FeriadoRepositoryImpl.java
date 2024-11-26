@@ -34,13 +34,13 @@ public class FeriadoRepositoryImpl implements IFeriadoRepository {
         params.addValue("fechaInicio", fechaInicio);
         params.addValue("fechaTermino", fechaTermino);
 
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowFeriado(rs));
+        return namedParameterJdbcTemplate.query(sql, params, (rs, _) -> mapRowFeriado(rs));
     }
 
     private Feriado mapRowFeriado(ResultSet rs) throws SQLException {
 
         Feriado feriado = new Feriado();
-        feriado.setFeriado(rs.getDate("feriado"));
+        feriado.setFecha(rs.getDate("feriado"));
 
         return feriado;
     }

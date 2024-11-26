@@ -38,7 +38,7 @@ public class FuncionarioController {
 
 
     @GetMapping("/buscar/{rut}")
-    public ResponseEntity<?> showFuncionario(@PathVariable Integer rut) {
+    public ResponseEntity<Object> showFuncionario(@PathVariable Integer rut) {
         try {
             Funcionario funcionario = service.findByRut(rut);
             if (funcionario == null) {

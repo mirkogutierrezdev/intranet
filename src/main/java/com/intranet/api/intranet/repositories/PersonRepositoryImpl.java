@@ -22,14 +22,15 @@ public class PersonRepositoryImpl implements IPersonaRepository {
     public Persona findByRut(Integer rut) {
         String sql = "SELECT rut, nombres, apellidopaterno, apellidomaterno, FECHA_NACIMIENTO, " +
                 "(SELECT vrut FROM CONTRIBUYENTES z WHERE z.rut = personas.rut) AS vrut, " +
-                "(SELECT email FROM CONTRIBUYENTES y WHERE y.rut = personas.rut) as email "+
+                "(SELECT email FROM CONTRIBUYENTES y WHERE y.rut = personas.rut) as email, "+
+                "(SELECT fono FROM CONTRIBUYENTES y WHERE y.rut = personas.rut) as fono "+
                 "FROM personas " +
                 "WHERE RUT = :rut";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
 
-        return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToPersona(rs));
+        return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, _) -> mapRowToPersona(rs));
     }
 
     private Persona mapRowToPersona(ResultSet rs) throws SQLException {
@@ -39,9 +40,10 @@ public class PersonRepositoryImpl implements IPersonaRepository {
         persona.setNombres(rs.getString("nombres"));
         persona.setApellidopaterno(rs.getString("apellidopaterno"));
         persona.setApellidomaterno(rs.getString("apellidomaterno"));
-        persona.setFecha_nac(rs.getDate("fecha_nacimiento"));
+        persona.setFechaNac(rs.getDate("fecha_nacimiento"));
         persona.setVrut(rs.getString("vrut"));
         persona.setEmail(rs.getString("email"));
+        persona.setTelefono(rs.getString("fono"));
 
         return persona;
     }

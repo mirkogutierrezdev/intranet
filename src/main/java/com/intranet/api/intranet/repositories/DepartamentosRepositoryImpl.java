@@ -29,7 +29,7 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
         params.addValue("depto", depto);
 
         try {
-            return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToDepartamento(rs));
+            return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, _) -> mapRowToDepartamento(rs));
         } catch (EmptyResultDataAccessException e) {
             return null; // Return null if no result is found
         }
@@ -51,7 +51,7 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
         String sql = "SELECT depto, NOMBRE_DEPARTAMENTO, JEFE_DEPARTAMENTO, CARGO_JEFE,RUT FROM DEPARTAMENTOS ";
 
         try {
-            return namedParameterJdbcTemplate.query(sql, (rs, rowNum) -> mapRowToDepartamento(rs));
+            return namedParameterJdbcTemplate.query(sql, (rs, _) -> mapRowToDepartamento(rs));
         } catch (EmptyResultDataAccessException e) {
             return Collections.emptyList(); // Return null if no result is found
         }

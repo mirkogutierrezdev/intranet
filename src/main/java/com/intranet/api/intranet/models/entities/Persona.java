@@ -9,8 +9,9 @@ public class Persona {
     private String nombres;
     private String apellidopaterno;
     private String apellidomaterno;
-    private Date fecha_nac;
+    private Date fechaNac;
     private String email;
+    private String telefono;
 
     public Persona() {
     }
@@ -39,14 +40,6 @@ public class Persona {
         this.apellidomaterno = apellidomaterno;
     }
 
-    public Date getFecha_nac() {
-        return fecha_nac;
-    }
-
-    public void setFecha_nac(Date date) {
-        this.fecha_nac = date;
-    }
-
     public Integer getRut() {
         return rut;
     }
@@ -63,7 +56,6 @@ public class Persona {
         this.vrut = vrut;
     }
 
-
     public String getEmail() {
         return email;
     }
@@ -72,6 +64,20 @@ public class Persona {
         this.email = email;
     }
 
-   
-    
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String fono) {
+        this.telefono = fono;
+    }
+
+    public Date getFechaNac() {
+        return fechaNac;
+    }
+
+    public void setFechaNac(Date fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
 }

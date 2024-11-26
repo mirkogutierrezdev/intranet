@@ -38,7 +38,8 @@ public class AusenciasRepositoryImpl implements IAusenciasRespository {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
 
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToAusencias(rs));
+        return namedParameterJdbcTemplate.query(sql, params, (rs, _) -> mapRowToAusencias(rs));
+
     }
 
     private Ausencias mapRowToAusencias(ResultSet rs) throws SQLException {

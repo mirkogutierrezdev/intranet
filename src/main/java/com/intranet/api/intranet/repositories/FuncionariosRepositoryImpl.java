@@ -48,7 +48,7 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         params.addValue("rut", rut);
 
         List<Funcionario> funcionarios = namedParameterJdbcTemplate.query(sql, params,
-                (rs, rowNum) -> mapRowToFuncionario(rs));
+                (rs, _) -> mapRowToFuncionario(rs));
 
         return funcionarios.isEmpty() ? null : funcionarios.get(0);
     }
@@ -60,7 +60,7 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
         funcionario.setNombres(rs.getString("nombres"));
         funcionario.setApellidopaterno(rs.getString("APELLIDOPATERNO"));
         funcionario.setApellidomaterno(rs.getString("APELLIDOMATERNO"));
-        funcionario.setFecha_nac(rs.getDate("FECHA_NACIMIENTO"));
+        funcionario.setFechaNac(rs.getDate("FECHA_NACIMIENTO"));
         funcionario.setArea(rs.getString("area"));
         funcionario.setVrut(rs.getString("vrut"));
         funcionario.setIdent(rs.getInt("ident"));

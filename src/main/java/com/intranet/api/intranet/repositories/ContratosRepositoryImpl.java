@@ -68,7 +68,7 @@ public class ContratosRepositoryImpl implements IContratosRepository {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
 
-        return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> mapRowToContrato(rs));
+        return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, _) -> mapRowToContrato(rs));
     }
 
     private Contratos mapRowToContrato(ResultSet rs) throws SQLException {
@@ -137,7 +137,7 @@ public class ContratosRepositoryImpl implements IContratosRepository {
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("depto", depto + "%");
-        return namedParameterJdbcTemplate.query(sql, params, (rs, rowNum) -> mapRowToListContrato(rs));
+        return namedParameterJdbcTemplate.query(sql, params, (rs, _) -> mapRowToListContrato(rs));
 
     }
 
