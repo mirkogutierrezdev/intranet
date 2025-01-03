@@ -58,11 +58,11 @@ public class ContratosRepositoryImpl implements IContratosRepository {
                 "   AND contratomes.ANOREMUN = escala.ANOREMUN " +
                 "   AND contratomes.MESREMUN = escala.MESREMUN " +
                 "   AND contratomes.LINCONTRATO = escala.LINCONTRATO " +
-                "WHERE contratomes.ANOREMUN = YEAR(GETDATE()) " +
+                "WHERE contratomes.ANOREMUN = YEAR(GETDATE())-1 " +
                 "  AND contratomes.MESREMUN = MONTH(DATEADD(month, -1, GETDATE())) " +
 
                 "  AND contratos.FECHAINI <= CONVERT(date, GETDATE(), 104) " +
-                "  AND (contratos.fechafin IS NULL OR contratos.fechafin >= CONVERT(date, GETDATE(), 104)) " +
+                "  AND (contratos.fechafin IS NULL OR contratos.fechafin >= '31/12/2024') " +
                 "  AND contratos.RUT = :rut;";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
@@ -129,10 +129,10 @@ public class ContratosRepositoryImpl implements IContratosRepository {
                 "   AND contratomes.ANOREMUN = escala.ANOREMUN " +
                 "   AND contratomes.MESREMUN = escala.MESREMUN " +
                 "   AND contratomes.LINCONTRATO = escala.LINCONTRATO " +
-                "WHERE contratomes.ANOREMUN = YEAR(GETDATE()) " +
+                "WHERE contratomes.ANOREMUN = YEAR(GETDATE())-1 " +
                 "  AND contratomes.MESREMUN = 10 " +
                 "  AND contratos.FECHAINI <= CONVERT(date, GETDATE(), 104) " +
-                "  AND (contratos.fechafin IS NULL OR contratos.fechafin >= CONVERT(date, GETDATE(), 104)) " +
+                "  AND (contratos.fechafin IS NULL OR contratos.fechafin >= '31/12/2024') " +
                 "  AND contratomes.depto LIKE :depto";
 
         MapSqlParameterSource params = new MapSqlParameterSource();

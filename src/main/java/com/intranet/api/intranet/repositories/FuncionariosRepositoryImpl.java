@@ -40,9 +40,9 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
                 "INNER JOIN RECONTRATOS AS contratos " +
                 "  ON REFUNCIONARIOS.IDENT = contratos.IDENT " +
                 "  AND contratos.rut = REFUNCIONARIOS.rut " +
-                "WHERE contratos.FECHAINI <= CONVERT(date, GETDATE(), 104) " +
-                "  AND (contratos.fechafin IS NULL OR contratos.fechafin >= CONVERT(date, GETDATE(), 104)) " +
-                "  AND personas.rut = :rut";
+                "WHERE personas.rut = :rut " ;
+                
+                
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
