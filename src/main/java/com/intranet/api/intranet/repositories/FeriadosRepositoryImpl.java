@@ -25,7 +25,7 @@ public class FeriadosRepositoryImpl implements IFeriadosRepository {
         int currentYear = LocalDate.now().getYear();
 
         
-        int currentMonth = LocalDate.now().getMonthValue() ;
+        int currentMonth = LocalDate.now().getMonthValue() -1;
         
 
         String sql = "exec ppefuncdiasferiados :ident, :rut, :rut, :currentYear, :currentMonth";
