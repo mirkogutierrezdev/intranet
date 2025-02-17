@@ -3,8 +3,10 @@ package com.intranet.api.intranet.repositories;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -36,7 +38,13 @@ public class FeriadosRepositoryImpl implements IFeriadosRepository {
         params.addValue("currentYear", currentYear);
         params.addValue("currentMonth", currentMonth);
 
-        return namedParameterJdbcTemplate.query(sql, params, (rs, _) -> mapRowFeriados(rs));
+        try {
+            return namedParameterJdbcTemplate.query(sql, params, (rs, _) -> mapRowFeriados(rs));
+        } catch (DataAccessException e) {
+            // Manejo de la excepción, se devuelve una lista vacía
+            return Collections.emptyList();
+        }
+
     }
 
     private Feriados mapRowFeriados(ResultSet rs) throws SQLException {
