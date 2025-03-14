@@ -59,7 +59,7 @@ public class ContratosRepositoryImpl implements IContratosRepository {
                 "   AND contratomes.MESREMUN = escala.MESREMUN " +
                 "   AND contratomes.LINCONTRATO = escala.LINCONTRATO " +
                 "WHERE contratomes.ANOREMUN = YEAR(GETDATE()) " +
-                " AND contratomes.MESREMUN = MONTH( GETDATE()) -1 " +
+                " AND contratomes.MESREMUN = MONTH( GETDATE())  " +
 
                 "  AND contratos.FECHAINI <= CONVERT(date, GETDATE(), 104) " +
                 "  AND (contratos.fechafin IS NULL OR contratos.fechafin >= CONVERT(date, GETDATE(), 104)) " +
@@ -130,7 +130,7 @@ public class ContratosRepositoryImpl implements IContratosRepository {
                 "   AND contratomes.MESREMUN = escala.MESREMUN " +
                 "   AND contratomes.LINCONTRATO = escala.LINCONTRATO " +
                 "WHERE contratomes.ANOREMUN = YEAR(GETDATE()) " +
-                "  AND contratomes.MESREMUN = MONTH( GETDATE()) -1" +
+                "  AND contratomes.MESREMUN = MONTH( GETDATE()) " +
 
                 "  AND contratos.FECHAINI <= CONVERT(date, GETDATE(), 104) " +
                 "  AND (contratos.fechafin IS NULL OR contratos.fechafin >= CONVERT(date, GETDATE(), 104)) " +
