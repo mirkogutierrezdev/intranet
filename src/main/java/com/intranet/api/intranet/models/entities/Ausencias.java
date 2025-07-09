@@ -1,23 +1,25 @@
 package com.intranet.api.intranet.models.entities;
 
-import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Ausencias {
 
     private Integer ident;
     private String descripcion;
-    private Date fechaInicio;
-    private Date fechaTermino;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate fechaInicio;
+    private LocalDate fechaTermino;
     private Long diasAusencia;
     private Integer diasFeriados;
-
 
     public Ausencias() {
     }
 
-    public Ausencias(Integer ident, String descripcion, Date fechaInicio, Date fechaTermino,Long diasAusencia, Integer diasFeriados) {
+    public Ausencias(Integer ident, String descripcion, LocalDate fechaInicio, LocalDate fechaTermino,
+            Long diasAusencia, Integer diasFeriados) {
         this.ident = ident;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
@@ -42,19 +44,19 @@ public class Ausencias {
         this.descripcion = descripcion;
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaTermino() {
+    public LocalDate getFechaTermino() {
         return fechaTermino;
     }
 
-    public void setFechaTermino(Date fechaTermino) {
+    public void setFechaTermino(LocalDate fechaTermino) {
         this.fechaTermino = fechaTermino;
     }
 
@@ -66,28 +68,20 @@ public class Ausencias {
         this.diasAusencia = diasAusencia;
     }
 
-    //Metodo que calcula la cantidad de dias de trabajo , descontando sa
-    public long calcularDiasHabiles(Date sqlStartDate, Date sqlEndDate) {
-        LocalDate startDate = sqlStartDate.toLocalDate();
-        LocalDate endDate = sqlEndDate.toLocalDate();
-
-        // Si la fecha de inicio es después de la fecha de fin, no hay días hábiles
-        if (startDate.isAfter(endDate)) {
+    // Metodo que calcula la cantidad de dias de trabajo , descontando sa
+    public long calcularDiasHabiles(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate))
             return 0;
-        }
 
         long workingDays = 0;
-
         LocalDate date = startDate;
         while (!date.isAfter(endDate)) {
-            // Añadir 1 al conteo de días hábiles si no es sábado ni domingo
-            if (date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY) {
+            if (date.getDayOfWeek() != DayOfWeek.SATURDAY &&
+                    date.getDayOfWeek() != DayOfWeek.SUNDAY) {
                 workingDays++;
             }
-            // Moverse al siguiente día
             date = date.plusDays(1);
         }
-
         return workingDays;
     }
 

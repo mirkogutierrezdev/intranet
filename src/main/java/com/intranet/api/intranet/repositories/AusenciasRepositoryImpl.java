@@ -47,8 +47,8 @@ public class AusenciasRepositoryImpl implements IAusenciasRespository {
         ausencias.setIdent(rs.getInt("ident"));
         ausencias.setDescripcion(rs.getString("DESCTIPOAUSENCIA"));
 
-        ausencias.setFechaInicio(rs.getDate("FECHAINICIO"));
-        ausencias.setFechaTermino(rs.getDate("FECHATERMINO"));
+        ausencias.setFechaInicio(rs.getDate("FECHAINICIO").toLocalDate());
+        ausencias.setFechaTermino(rs.getDate("FECHATERMINO").toLocalDate());
         ausencias.setDiasFeriados(rs.getInt("feriados_mes"));
 
         ausencias.setDiasAusencia(

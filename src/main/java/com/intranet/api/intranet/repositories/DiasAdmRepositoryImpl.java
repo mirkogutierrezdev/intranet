@@ -32,7 +32,7 @@ public class DiasAdmRepositoryImpl implements IDiasAdmRespository {
 
         try {
             return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, _) -> mapRowToDiasAdm(rs));
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException _) {
             return null; // Return null if no result is found
         }
     }

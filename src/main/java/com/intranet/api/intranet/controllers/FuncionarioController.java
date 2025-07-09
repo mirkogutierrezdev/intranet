@@ -54,9 +54,9 @@ public class FuncionarioController {
 
 
     
-    @GetMapping("/esjefe/{rut}")
-    public ResponseEntity<Boolean> esJefe(@PathVariable Integer rut) {
-        Boolean result = service.isJefe(rut);
+    @GetMapping("/esjefe/{rut}/{depto}")
+    public ResponseEntity<Boolean> esJefe(@PathVariable Integer rut,@PathVariable String depto ) {
+        Boolean result = service.isJefe(rut, depto);
         HttpStatus status = result != null ? HttpStatus.OK : HttpStatus.NOT_FOUND; // Podrías ajustar según tu lógica
         return ResponseEntity.status(status).body(result);
     }

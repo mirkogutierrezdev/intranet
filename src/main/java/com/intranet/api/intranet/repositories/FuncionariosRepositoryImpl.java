@@ -68,13 +68,14 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
     }
 
     @Override
-    public Boolean esJefe(Integer rut) {
+    public Boolean esJefe(Integer rut, String depto) {
         String sql = "SELECT COUNT(*) FROM DEPARTAMENTOS " +
                 "INNER JOIN PERSONAS ON DEPARTAMENTOS.RUT = PERSONAS.RUT " +
-                "WHERE DEPARTAMENTOS.rut = :rut ";
+                "WHERE DEPARTAMENTOS.rut = :rut  and depto =:depto" ;
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("rut", rut);
+        params.addValue("depto", depto);
 
         try {
             // Ejecutar la consulta y obtener el resultado como un entero
@@ -82,7 +83,7 @@ public class FuncionariosRepositoryImpl implements IFuncionariossRepository {
 
             // Si count es mayor que 0, la persona es jefe; de lo contrario, no lo es
             return count != null && count > 0;
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException _) {
             return false; // Si no hay resultados, la persona no es jefe
         }
     }

@@ -29,7 +29,7 @@ public class DetalleLMImplRepository implements IDetalleLMRepository {
 
         try {
             return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, _) -> mapRowToDetalleLM(rs));
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException _) {
             return null; // Return null if no result is found
         }
     }

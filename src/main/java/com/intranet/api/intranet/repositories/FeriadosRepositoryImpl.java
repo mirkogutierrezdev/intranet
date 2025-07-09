@@ -40,7 +40,7 @@ public class FeriadosRepositoryImpl implements IFeriadosRepository {
 
         try {
             return namedParameterJdbcTemplate.query(sql, params, (rs, _) -> mapRowFeriados(rs));
-        } catch (DataAccessException e) {
+        } catch (DataAccessException _) {
             // Manejo de la excepción, se devuelve una lista vacía
             return Collections.emptyList();
         }

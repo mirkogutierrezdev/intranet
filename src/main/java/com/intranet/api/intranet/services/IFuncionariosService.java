@@ -6,6 +6,6 @@ public interface IFuncionariosService {
 
      Funcionario findByRut(Integer rut);
 
-     Boolean isJefe(Integer rut);
+     Boolean isJefe(Integer rut, String depto);
      
 }

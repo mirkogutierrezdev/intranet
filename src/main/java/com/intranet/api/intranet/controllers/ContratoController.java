@@ -27,6 +27,7 @@ public class ContratoController {
     public ResponseEntity<Object> getContratoByRut(@PathVariable Integer rut) {
         try {
             Contratos contrato = contratoService.findContratosByRut(rut);
+        
             return ResponseEntity.ok(contrato);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

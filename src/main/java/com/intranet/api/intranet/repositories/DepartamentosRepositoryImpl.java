@@ -30,7 +30,7 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
 
         try {
             return namedParameterJdbcTemplate.queryForObject(sql, params, (rs, _) -> mapRowToDepartamento(rs));
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException _) {
             return null; // Return null if no result is found
         }
     }
@@ -52,7 +52,7 @@ public class DepartamentosRepositoryImpl implements IDepartamentosRepository {
 
         try {
             return namedParameterJdbcTemplate.query(sql, (rs, _) -> mapRowToDepartamento(rs));
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException _) {
             return Collections.emptyList(); // Return null if no result is found
         }
 

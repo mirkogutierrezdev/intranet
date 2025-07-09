@@ -25,22 +25,20 @@ public class LicenciasMedicasRepositoryImpl implements ILicenciasMedicasReposito
 
     @Override
     public List<LicienciaMedica> buscaLicencias(Funcionario funcionario) {
-        String sql = "select  \r\n" +
-                "NUMLIC,\r\n" +
-                "ident,\r\n" +
-                "FECHAINI,\r\n" +
-                "isnull((select NOMBREISAPRE from REISAPRES z where z.CODISAPRE=LMLICENCIAS.CODISAPRE),'Fonasa') as prevision,\r\n"
-                +
+        String sql = "select  " +
+                "NUMLIC, " +
+                "ident, " +
+                "FECHAINI, " +
+                "isnull((select NOMBREISAPRE from REISAPRES z where z.CODISAPRE=LMLICENCIAS.CODISAPRE),'Fonasa') as prevision, "+
                 "(select nombreafp from REAFP z where z.CODAFP=LMLICENCIAS.CODAFP) as AFP,\r\n" +
-                "DIASLIC,\r\n" +
-                "(select DESCTIPOLIC from LMTIPOLICENCIA y where y.CODTIPOLIC=LMLICENCIAS.CODTIPOLIC) as tipo_licencia,\r\n"
-                +
-                "FECHAEMISION,\r\n" +
-                "FECHARECEPCION,\r\n" +
-                "RUT_PROFESIONAL,\r\n" +
-                "NOMBRE_PROFESIONAL\r\n" +
-                "from LMLICENCIAS\r\n" +
-                "where ident=:ident and rut = :rut and LMLICENCIAS.FECHAINI >=\r\n" +
+                "DIASLIC, " +
+                "(select DESCTIPOLIC from LMTIPOLICENCIA y where y.CODTIPOLIC=LMLICENCIAS.CODTIPOLIC) as tipo_licencia, " +
+                "FECHAEMISION, " +
+                "FECHARECEPCION, " +
+                "RUT_PROFESIONAL, " +
+                "NOMBRE_PROFESIONAL " +
+                "from LMLICENCIAS " +
+                "where ident=:ident and rut = :rut and LMLICENCIAS.FECHAINI >= " +
                 "(select fechacorteflegal from PEINICIALES z where ident=1 and z.RUT=LMLICENCIAS.RUT)";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
